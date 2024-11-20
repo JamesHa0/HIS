@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.DisecategoryMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Disecategory">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="dicacode" column="DicaCode" jdbcType="VARCHAR"/>
+            <result property="dicaname" column="DicaName" jdbcType="VARCHAR"/>
+            <result property="sequenceno" column="SequenceNo" jdbcType="INTEGER"/>
+            <result property="dicatype" column="DicaType" jdbcType="INTEGER"/>
+            <result property="delmark" column="DelMark" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,DicaCode,DicaName,
+        SequenceNo,DicaType,DelMark
+    </sql>
+</mapper>

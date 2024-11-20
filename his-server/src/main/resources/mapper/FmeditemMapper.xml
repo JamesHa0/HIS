@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.FmeditemMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Fmeditem">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="itemcode" column="ItemCode" jdbcType="VARCHAR"/>
+            <result property="itemname" column="ItemName" jdbcType="VARCHAR"/>
+            <result property="format" column="Format" jdbcType="VARCHAR"/>
+            <result property="price" column="Price" jdbcType="DECIMAL"/>
+            <result property="expclassid" column="ExpClassID" jdbcType="INTEGER"/>
+            <result property="deptid" column="DeptID" jdbcType="INTEGER"/>
+            <result property="mnemoniccode" column="MnemonicCode" jdbcType="VARCHAR"/>
+            <result property="creationdate" column="CreationDate" jdbcType="TIMESTAMP"/>
+            <result property="lastupdatedate" column="LastUpdateDate" jdbcType="TIMESTAMP"/>
+            <result property="recordtype" column="RecordType" jdbcType="INTEGER"/>
+            <result property="delmark" column="DelMark" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,ItemCode,ItemName,
+        Format,Price,ExpClassID,
+        DeptID,MnemonicCode,CreationDate,
+        LastUpdateDate,RecordType,DelMark
+    </sql>
+</mapper>

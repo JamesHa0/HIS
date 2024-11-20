@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.RegisterMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Register">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="casenumber" column="CaseNumber" jdbcType="VARCHAR"/>
+            <result property="realname" column="RealName" jdbcType="VARCHAR"/>
+            <result property="gender" column="Gender" jdbcType="INTEGER"/>
+            <result property="idnumber" column="IDnumber" jdbcType="VARCHAR"/>
+            <result property="birthdate" column="BirthDate" jdbcType="DATE"/>
+            <result property="age" column="Age" jdbcType="INTEGER"/>
+            <result property="agetype" column="AgeType" jdbcType="CHAR"/>
+            <result property="homeaddress" column="HomeAddress" jdbcType="VARCHAR"/>
+            <result property="visitdate" column="VisitDate" jdbcType="DATE"/>
+            <result property="noon" column="Noon" jdbcType="CHAR"/>
+            <result property="deptid" column="DeptID" jdbcType="INTEGER"/>
+            <result property="userid" column="UserID" jdbcType="INTEGER"/>
+            <result property="registleid" column="RegistLeID" jdbcType="INTEGER"/>
+            <result property="settleid" column="SettleID" jdbcType="INTEGER"/>
+            <result property="isbook" column="IsBook" jdbcType="CHAR"/>
+            <result property="registtime" column="RegistTime" jdbcType="TIMESTAMP"/>
+            <result property="registerid" column="RegisterID" jdbcType="INTEGER"/>
+            <result property="visitstate" column="VisitState" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,CaseNumber,RealName,
+        Gender,IDnumber,BirthDate,
+        Age,AgeType,HomeAddress,
+        VisitDate,Noon,DeptID,
+        UserID,RegistLeID,SettleID,
+        IsBook,RegistTime,RegisterID,
+        VisitState
+    </sql>
+</mapper>

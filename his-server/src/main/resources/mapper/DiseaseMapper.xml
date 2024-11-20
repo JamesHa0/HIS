@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.DiseaseMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Disease">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="diseasecode" column="DiseaseCode" jdbcType="VARCHAR"/>
+            <result property="diseasename" column="DiseaseName" jdbcType="VARCHAR"/>
+            <result property="diseaseicd" column="DiseaseICD" jdbcType="VARCHAR"/>
+            <result property="disecategoryid" column="DiseCategoryID" jdbcType="INTEGER"/>
+            <result property="delmark" column="DelMark" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,DiseaseCode,DiseaseName,
+        DiseaseICD,DiseCategoryID,DelMark
+    </sql>
+</mapper>

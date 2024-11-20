@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.MedicalrecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Medicalrecord">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="casenumber" column="CaseNumber" jdbcType="VARCHAR"/>
+            <result property="registid" column="RegistID" jdbcType="INTEGER"/>
+            <result property="readme" column="Readme" jdbcType="VARCHAR"/>
+            <result property="present" column="Present" jdbcType="VARCHAR"/>
+            <result property="presenttreat" column="PresentTreat" jdbcType="VARCHAR"/>
+            <result property="history" column="History" jdbcType="VARCHAR"/>
+            <result property="allergy" column="Allergy" jdbcType="VARCHAR"/>
+            <result property="physique" column="Physique" jdbcType="VARCHAR"/>
+            <result property="proposal" column="Proposal" jdbcType="VARCHAR"/>
+            <result property="careful" column="Careful" jdbcType="VARCHAR"/>
+            <result property="checkresult" column="CheckResult" jdbcType="VARCHAR"/>
+            <result property="diagnosis" column="Diagnosis" jdbcType="VARCHAR"/>
+            <result property="handling" column="Handling" jdbcType="VARCHAR"/>
+            <result property="casestate" column="CaseState" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,CaseNumber,RegistID,
+        Readme,Present,PresentTreat,
+        History,Allergy,Physique,
+        Proposal,Careful,CheckResult,
+        Diagnosis,Handling,CaseState
+    </sql>
+</mapper>

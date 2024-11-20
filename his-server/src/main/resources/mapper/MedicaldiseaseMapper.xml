@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.MedicaldiseaseMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Medicaldisease">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="medicalid" column="MedicalID" jdbcType="INTEGER"/>
+            <result property="registid" column="RegistID" jdbcType="INTEGER"/>
+            <result property="diseaseid" column="DiseaseID" jdbcType="INTEGER"/>
+            <result property="diagnosetype" column="DiagnoseType" jdbcType="INTEGER"/>
+            <result property="getsiskdate" column="GetSiskDate" jdbcType="TIMESTAMP"/>
+            <result property="diagnosecate" column="DiagnoseCate" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,MedicalID,RegistID,
+        DiseaseID,DiagnoseType,GetSiskDate,
+        DiagnoseCate
+    </sql>
+</mapper>

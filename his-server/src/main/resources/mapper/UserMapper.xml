@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.User">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="username" column="UserName" jdbcType="VARCHAR"/>
+            <result property="password" column="Password" jdbcType="VARCHAR"/>
+            <result property="realname" column="RealName" jdbcType="VARCHAR"/>
+            <result property="usetype" column="UseType" jdbcType="INTEGER"/>
+            <result property="doctitleid" column="DocTitleID" jdbcType="INTEGER"/>
+            <result property="isscheduling" column="IsScheduling" jdbcType="CHAR"/>
+            <result property="deptid" column="DeptID" jdbcType="INTEGER"/>
+            <result property="registleid" column="RegistLeID" jdbcType="INTEGER"/>
+            <result property="delmark" column="DelMark" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,UserName,Password,
+        RealName,UseType,DocTitleID,
+        IsScheduling,DeptID,RegistLeID,
+        DelMark
+    </sql>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.PatientcostsMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.Patientcosts">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="registid" column="RegistID" jdbcType="INTEGER"/>
+            <result property="invoiceid" column="InvoiceID" jdbcType="INTEGER"/>
+            <result property="itemid" column="ItemID" jdbcType="INTEGER"/>
+            <result property="itemtype" column="ItemType" jdbcType="INTEGER"/>
+            <result property="name" column="Name" jdbcType="VARCHAR"/>
+            <result property="price" column="Price" jdbcType="DECIMAL"/>
+            <result property="amount" column="Amount" jdbcType="DECIMAL"/>
+            <result property="deptid" column="DeptID" jdbcType="INTEGER"/>
+            <result property="createtime" column="Createtime" jdbcType="TIMESTAMP"/>
+            <result property="createoperid" column="CreateOperID" jdbcType="INTEGER"/>
+            <result property="paytime" column="PayTime" jdbcType="TIMESTAMP"/>
+            <result property="registerid" column="RegisterID" jdbcType="INTEGER"/>
+            <result property="feetype" column="FeeType" jdbcType="INTEGER"/>
+            <result property="backid" column="BackID" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,RegistID,InvoiceID,
+        ItemID,ItemType,Name,
+        Price,Amount,DeptID,
+        Createtime,CreateOperID,PayTime,
+        RegisterID,FeeType,BackID
+    </sql>
+</mapper>
