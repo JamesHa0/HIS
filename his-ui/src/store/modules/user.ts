@@ -20,9 +20,11 @@ export const useUserStore = defineStore("user", () => {
     return new Promise<void>((resolve, reject) => {
       AuthAPI.login(loginData)
         .then((data) => {
-          const { tokenType, accessToken, refreshToken } = data;
-          setToken(tokenType + " " + accessToken); // Bearer eyJhbGciOiJIUzI1NiJ9.xxx.xxx
-          setRefreshToken(refreshToken);
+          // const { tokenType, accessToken, refreshToken } = data;
+          // setToken(tokenType + " " + accessToken); // Bearer eyJhbGciOiJIUzI1NiJ9.xxx.xxx
+          setToken("Bearer")
+          // setRefreshToken(refreshToken);
+          // Object.assign((userInfo.value{ ...data}));ui
           resolve();
         })
         .catch((error) => {
