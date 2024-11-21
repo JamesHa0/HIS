@@ -4,6 +4,9 @@ import com.jameshao.his.hisserver.dao.UserDao;
 import com.jameshao.his.hisserver.dao.UserDaoImpl;
 import com.jameshao.his.hisserver.vo.User;
 
+import java.util.List;
+import java.util.Map;
+
 public class UserServiceImpl implements UserService{
 
     UserDao dao = new UserDaoImpl();
@@ -25,5 +28,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByUsername(String username) {
         return dao.getByUsername(username);
+    }
+
+    @Override
+    public List<Map<String, Object>> getRoutersByUsername(String username) {
+        // todo: 数据处理
+        List<Map<String, Object>> data = dao.getRoutes(username);
+        return data;
     }
 }

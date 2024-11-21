@@ -17,6 +17,10 @@ import java.util.Map;
 public class UserServlet extends BaseServlet{
     UserService service = new UserServiceImpl();
 
+    void routes(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("username");
+        this.writeSuccessJSON(response,service.getRoutersByUsername(username));
+    }
     void me(HttpServletRequest request, HttpServletResponse response){
         String username = request.getParameter("username");
         if(username == null || username.trim().length()<=0){
