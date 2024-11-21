@@ -8,5 +8,5 @@ import java.util.Map;
 public interface UserService {
     public int login( String username,String password);
     public User getUserByUsername(String username);
-    public List<Map<String,Object>> getRoutersByUsername(String username);
+    public List<Map<String,Object>> getRoutesByUsername(String username);
 }

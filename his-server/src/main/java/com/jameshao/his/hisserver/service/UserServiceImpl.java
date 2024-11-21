@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Map<String, Object>> getRoutersByUsername(String username) {
+    public List<Map<String, Object>> getRoutesByUsername(String username) {
         // todo: 数据处理
         List<Map<String, Object>> data = dao.getRoutes(username);
         return data;

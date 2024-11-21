@@ -19,7 +19,7 @@ public class UserServlet extends BaseServlet{
 
     void routes(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
-        this.writeSuccessJSON(response,service.getRoutersByUsername(username));
+        this.writeSuccessJSON(response,service.getRoutesByUsername(username));
     }
     void me(HttpServletRequest request, HttpServletResponse response){
         String username = request.getParameter("username");
