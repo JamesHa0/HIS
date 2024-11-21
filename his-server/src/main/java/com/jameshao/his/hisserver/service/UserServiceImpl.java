@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
                 //children:在查询结果中找parent_id=当前id的记录作为children
                 List<Map<String, Object>> children = new ArrayList<>();
                 for (Map<String, Object> dd : dataes){
-                    if((Long) dd.get("parent_id") == data.get("id")){
+                    if( ((Long) dd.get("parent_id")).intValue() == (Integer) data.get("id")){
                         Map<String, Object> child = new HashMap<>();
                         child.put("component", data.get("component"));
                         RouteMeta mm = new RouteMeta((String)dd.get("name"),(String)dd.get("icon"),(Boolean) dd.get("visible"),true,(String)dd.get("params"));
