@@ -228,6 +228,9 @@ export interface UserInfo {
   /** 权限 */
   // perms: string[];
   perms?: string[];
+
+  // 真实姓名
+  realname?: string;
 }
 
 /**

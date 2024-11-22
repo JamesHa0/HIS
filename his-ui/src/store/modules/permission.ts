@@ -1,11 +1,12 @@
 import type { RouteRecordRaw } from "vue-router";
 import { constantRoutes } from "@/router";
-import { store } from "@/store";
+import {store, useUserStore} from "@/store";
 import router from "@/router";
 
 import MenuAPI, { type RouteVO } from "@/api/system/menu";
 const modules = import.meta.glob("../../views/**/**.vue");
 const Layout = () => import("@/layout/index.vue");
+
 
 export const usePermissionStore = defineStore("permission", () => {
   // 所有路由，包括静态和动态路由
@@ -15,12 +16,14 @@ export const usePermissionStore = defineStore("permission", () => {
   // 路由是否已加载
   const isRoutesLoaded = ref(false);
 
+  const userStore = useUserStore();
+  const username = userStore.userInfo.username;
   /**
    * 生成动态路由
    */
   function generateRoutes() {
     return new Promise<RouteRecordRaw[]>((resolve, reject) => {
-      MenuAPI.getRoutes()
+      MenuAPI.getRoutes(username)
         .then((data) => {
           const dynamicRoutes = transformRoutes(data);
           routes.value = constantRoutes.concat(dynamicRoutes);

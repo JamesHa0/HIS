@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <github-corner class="github-corner" />
+<!--    <github-corner class="github-corner" />-->
 
     <el-card shadow="never">
       <el-row justify="space-between">
@@ -17,136 +17,136 @@
           </div>
         </el-col>
 
-        <el-col :span="6" :xs="24">
-          <div class="flex h-full items-center justify-around">
-            <el-statistic v-for="item in statisticData" :key="item.key" :value="item.value">
-              <template #title>
-                <div class="flex items-center">
-                  <svg-icon :icon-class="item.iconClass" size="20px" />
-                  <span class="text-[16px] ml-1">{{ item.title }}</span>
-                </div>
-              </template>
-              <template v-if="item.suffix" #suffix>/100</template>
-            </el-statistic>
-          </div>
-        </el-col>
+<!--        <el-col :span="6" :xs="24">-->
+<!--          <div class="flex h-full items-center justify-around">-->
+<!--            <el-statistic v-for="item in statisticData" :key="item.key" :value="item.value">-->
+<!--              <template #title>-->
+<!--                <div class="flex items-center">-->
+<!--                  <svg-icon :icon-class="item.iconClass" size="20px" />-->
+<!--                  <span class="text-[16px] ml-1">{{ item.title }}</span>-->
+<!--                </div>-->
+<!--              </template>-->
+<!--              <template v-if="item.suffix" #suffix>/100</template>-->
+<!--            </el-statistic>-->
+<!--          </div>-->
+<!--        </el-col>-->
       </el-row>
     </el-card>
 
     <!-- 数据卡片 -->
-    <el-row :gutter="10" class="mt-5">
-      <el-col :xs="24" :sm="12" :lg="6">
-        <el-card shadow="never">
-          <template #header>
-            <div class="flex-x-between">
-              <span class="text-[var(--el-text-color-secondary)]">在线用户</span>
-              <el-tag type="success" size="small">-</el-tag>
-            </div>
-          </template>
+<!--    <el-row :gutter="10" class="mt-5">-->
+<!--      <el-col :xs="24" :sm="12" :lg="6">-->
+<!--        <el-card shadow="never">-->
+<!--          <template #header>-->
+<!--            <div class="flex-x-between">-->
+<!--              <span class="text-[var(&#45;&#45;el-text-color-secondary)]">在线用户</span>-->
+<!--              <el-tag type="success" size="small">-</el-tag>-->
+<!--            </div>-->
+<!--          </template>-->
 
-          <div class="flex-x-between mt-2">
-            <span class="text-lg">{{ onlineUserCount }}</span>
-            <svg-icon icon-class="user" size="2em" />
-          </div>
-          <div class="flex-x-between mt-2 text-sm text-[var(--el-text-color-secondary)]">
-            <span>总用户数</span>
-            <span>5</span>
-          </div>
-        </el-card>
-      </el-col>
+<!--          <div class="flex-x-between mt-2">-->
+<!--            <span class="text-lg">{{ onlineUserCount }}</span>-->
+<!--            <svg-icon icon-class="user" size="2em" />-->
+<!--          </div>-->
+<!--          <div class="flex-x-between mt-2 text-sm text-[var(&#45;&#45;el-text-color-secondary)]">-->
+<!--            <span>总用户数</span>-->
+<!--            <span>5</span>-->
+<!--          </div>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
 
-      <el-col v-for="(item, index) in visitStatsList" :key="index" :xs="24" :sm="12" :lg="6">
-        <el-skeleton :loading="visitStatsLoading" :rows="5" animated>
-          <template #template>
-            <el-card>
-              <template #header>
-                <div>
-                  <el-skeleton-item variant="h3" style="width: 40%" />
-                  <el-skeleton-item variant="rect" style="float: right; width: 1em; height: 1em" />
-                </div>
-              </template>
+<!--      <el-col v-for="(item, index) in visitStatsList" :key="index" :xs="24" :sm="12" :lg="6">-->
+<!--        <el-skeleton :loading="visitStatsLoading" :rows="5" animated>-->
+<!--          <template #template>-->
+<!--            <el-card>-->
+<!--              <template #header>-->
+<!--                <div>-->
+<!--                  <el-skeleton-item variant="h3" style="width: 40%" />-->
+<!--                  <el-skeleton-item variant="rect" style="float: right; width: 1em; height: 1em" />-->
+<!--                </div>-->
+<!--              </template>-->
 
-              <div class="flex-x-between">
-                <el-skeleton-item variant="text" style="width: 30%" />
-                <el-skeleton-item variant="circle" style="width: 2em; height: 2em" />
-              </div>
-              <div class="mt-5 flex-x-between">
-                <el-skeleton-item variant="text" style="width: 50%" />
-                <el-skeleton-item variant="text" style="width: 1em" />
-              </div>
-            </el-card>
-          </template>
-          <template v-if="!visitStatsLoading">
-            <el-card shadow="never">
-              <template #header>
-                <div class="flex-x-between">
-                  <span class="text-[var(--el-text-color-secondary)]">
-                    {{ item.title }}
-                  </span>
-                  <el-tag :type="item.tagType" size="small">
-                    {{ item.granularity }}
-                  </el-tag>
-                </div>
-              </template>
+<!--              <div class="flex-x-between">-->
+<!--                <el-skeleton-item variant="text" style="width: 30%" />-->
+<!--                <el-skeleton-item variant="circle" style="width: 2em; height: 2em" />-->
+<!--              </div>-->
+<!--              <div class="mt-5 flex-x-between">-->
+<!--                <el-skeleton-item variant="text" style="width: 50%" />-->
+<!--                <el-skeleton-item variant="text" style="width: 1em" />-->
+<!--              </div>-->
+<!--            </el-card>-->
+<!--          </template>-->
+<!--          <template v-if="!visitStatsLoading">-->
+<!--            <el-card shadow="never">-->
+<!--              <template #header>-->
+<!--                <div class="flex-x-between">-->
+<!--                  <span class="text-[var(&#45;&#45;el-text-color-secondary)]">-->
+<!--                    {{ item.title }}-->
+<!--                  </span>-->
+<!--                  <el-tag :type="item.tagType" size="small">-->
+<!--                    {{ item.granularity }}-->
+<!--                  </el-tag>-->
+<!--                </div>-->
+<!--              </template>-->
 
-              <div class="flex-x-between mt-2">
-                <div class="flex-y-center">
-                  <span class="text-lg">{{ item.todayCount }}</span>
-                  <span :class="['text-xs', 'ml-2', getGrowthRateClass(item.growthRate)]">
-                    <el-icon>
-                      <Top v-if="item.growthRate > 0" />
-                      <Bottom v-else-if="item.growthRate < 0" />
-                    </el-icon>
-                    {{ formatGrowthRate(item.growthRate) }}
-                  </span>
-                </div>
-                <svg-icon :icon-class="item.icon" size="2em" />
-              </div>
+<!--              <div class="flex-x-between mt-2">-->
+<!--                <div class="flex-y-center">-->
+<!--                  <span class="text-lg">{{ item.todayCount }}</span>-->
+<!--                  <span :class="['text-xs', 'ml-2', getGrowthRateClass(item.growthRate)]">-->
+<!--                    <el-icon>-->
+<!--                      <Top v-if="item.growthRate > 0" />-->
+<!--                      <Bottom v-else-if="item.growthRate < 0" />-->
+<!--                    </el-icon>-->
+<!--                    {{ formatGrowthRate(item.growthRate) }}-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--                <svg-icon :icon-class="item.icon" size="2em" />-->
+<!--              </div>-->
 
-              <div class="flex-x-between mt-2 text-sm text-[var(--el-text-color-secondary)]">
-                <span>总{{ item.title }}</span>
-                <span>{{ item.totalCount }}</span>
-              </div>
-            </el-card>
-          </template>
-        </el-skeleton>
-      </el-col>
-    </el-row>
+<!--              <div class="flex-x-between mt-2 text-sm text-[var(&#45;&#45;el-text-color-secondary)]">-->
+<!--                <span>总{{ item.title }}</span>-->
+<!--                <span>{{ item.totalCount }}</span>-->
+<!--              </div>-->
+<!--            </el-card>-->
+<!--          </template>-->
+<!--        </el-skeleton>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
 
-    <el-row :gutter="10" class="mt-5">
-      <el-col :xs="24" :span="16">
-        <!-- 访问趋势统计图 -->
-        <VisitTrend id="VisitTrend" width="100%" height="400px" />
-      </el-col>
-      <el-col :xs="24" :span="8">
-        <el-card>
-          <template #header>
-            <div class="flex-x-between">
-              <div class="flex-y-center">通知公告</div>
-              <el-link type="primary">
-                <span class="text-xs" @click="viewMoreNotice">查看更多</span>
-                <el-icon class="text-xs"><ArrowRight /></el-icon>
-              </el-link>
-            </div>
-          </template>
+<!--    <el-row :gutter="10" class="mt-5">-->
+<!--      <el-col :xs="24" :span="16">-->
+<!--        &lt;!&ndash; 访问趋势统计图 &ndash;&gt;-->
+<!--        <VisitTrend id="VisitTrend" width="100%" height="400px" />-->
+<!--      </el-col>-->
+<!--      <el-col :xs="24" :span="8">-->
+<!--        <el-card>-->
+<!--          <template #header>-->
+<!--            <div class="flex-x-between">-->
+<!--              <div class="flex-y-center">通知公告</div>-->
+<!--              <el-link type="primary">-->
+<!--                <span class="text-xs" @click="viewMoreNotice">查看更多</span>-->
+<!--                <el-icon class="text-xs"><ArrowRight /></el-icon>-->
+<!--              </el-link>-->
+<!--            </div>-->
+<!--          </template>-->
 
-          <el-scrollbar height="400px">
-            <div v-for="(item, index) in notices" :key="index" class="flex-y-center py-3">
-              <DictLabel v-model="item.type" code="notice_type" size="small" />
-              <el-text
-                truncated
-                class="!mx-2 flex-1 !text-xs !text-[var(--el-text-color-secondary)]"
-              >
-                {{ item.title }}
-              </el-text>
-              <el-link @click="viewNoticeDetail(item.id)">
-                <el-icon class="text-sm"><View /></el-icon>
-              </el-link>
-            </div>
-          </el-scrollbar>
-        </el-card>
-      </el-col>
-    </el-row>
+<!--          <el-scrollbar height="400px">-->
+<!--            <div v-for="(item, index) in notices" :key="index" class="flex-y-center py-3">-->
+<!--              <DictLabel v-model="item.type" code="notice_type" size="small" />-->
+<!--              <el-text-->
+<!--                truncated-->
+<!--                class="!mx-2 flex-1 !text-xs !text-[var(&#45;&#45;el-text-color-secondary)]"-->
+<!--              >-->
+<!--                {{ item.title }}-->
+<!--              </el-text>-->
+<!--              <el-link @click="viewNoticeDetail(item.id)">-->
+<!--                <el-icon class="text-sm"><View /></el-icon>-->
+<!--              </el-link>-->
+<!--            </div>-->
+<!--          </el-scrollbar>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
 
     <NoticeDetail ref="noticeDetailRef" />
   </div>
@@ -176,11 +176,11 @@ const greetings = computed(() => {
   if (hours >= 6 && hours < 8) {
     return "晨起披衣出草堂，轩窗已自喜微凉🌅！";
   } else if (hours >= 8 && hours < 12) {
-    return "上午好，" + userStore.userInfo.nickname + "！";
+    return "上午好，" + userStore.userInfo.username + "！";
   } else if (hours >= 12 && hours < 18) {
-    return "下午好，" + userStore.userInfo.nickname + "！";
-  } else if (hours >= 18 && hours < 24) {
-    return "晚上好，" + userStore.userInfo.nickname + "！";
+    return "下午好，" + userStore.userInfo.username + "！";
+  } else if (hours >= 18 && hours < 23) {
+    return "晚上好，" + userStore.userInfo.username + "！";
   } else {
     return "偷偷向银河要了一把碎星，只等你闭上眼睛撒入你的梦中，晚安🌛！";
   }
@@ -294,17 +294,18 @@ function viewNoticeDetail(id: string) {
 }
 
 onMounted(() => {
-  loadVisitStatsData();
-
-  // 获取我的通知公告
-  NoticeAPI.getMyNoticePage({ pageNum: 1, pageSize: 10 }).then((data) => {
-    notices.value = data.list;
-  });
-
-  WebSocketManager.subscribeToTopic("/topic/onlineUserCount", (data) => {
-    console.log("收到在线用户数量：", data);
-    onlineUserCount.value = JSON.parse(data);
-  });
+  // 测试：先关闭调用，避免影响其他页面
+  // loadVisitStatsData();
+  //
+  // // 获取我的通知公告
+  // NoticeAPI.getMyNoticePage({ pageNum: 1, pageSize: 10 }).then((data) => {
+  //   notices.value = data.list;
+  // });
+  //
+  // WebSocketManager.subscribeToTopic("/topic/onlineUserCount", (data) => {
+  //   console.log("收到在线用户数量：", data);
+  //   onlineUserCount.value = JSON.parse(data);
+  // });
 });
 </script>
 

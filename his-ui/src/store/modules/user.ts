@@ -60,16 +60,17 @@ export const useUserStore = defineStore("user", () => {
    * 登出
    */
   function logout() {
-    return new Promise<void>((resolve, reject) => {
-      AuthAPI.logout()
-        .then(() => {
-          clearUserData();
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    clearUserData();
+    // return new Promise<void>((resolve, reject) => {
+      // AuthAPI.logout()
+      //   .then(() => {
+      //     clearUserData();
+      //     resolve();
+      //   })
+      //   .catch((error) => {
+      //     reject(error);
+      //   });
+    // });
   }
 
   /**

@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 
-const ROLE_BASE_URL = "/api/v1/roles";
+const ROLE_BASE_URL = "/user";//原：api/v1/roles
 
 const RoleAPI = {
   /** 获取角色分页数据 */

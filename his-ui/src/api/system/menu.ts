@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 // 菜单基础URL
-const MENU_BASE_URL = "/api/v1/menus";
+const MENU_BASE_URL = "/user";
 
 const MenuAPI = {
   /**
@@ -10,9 +10,9 @@ const MenuAPI = {
    *
    * @returns 路由列表
    */
-  getRoutes() {
+  getRoutes(username:string) {
     return request<any, RouteVO[]>({
-      url: `${MENU_BASE_URL}/routes`,
+      url: `${MENU_BASE_URL}/routes?username=`+username,
       method: "get",
     });
   },

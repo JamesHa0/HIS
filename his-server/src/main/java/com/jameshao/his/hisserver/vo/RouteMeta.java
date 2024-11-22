@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteMeta {
-    String name;
+    String title;
     String icon;
     boolean hidden;
     boolean alwaysShow;

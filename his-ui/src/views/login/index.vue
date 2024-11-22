@@ -240,7 +240,7 @@ async function handleLoginSubmit() {
         .then(async () => {
           await userStore.getUserInfo(loginData.value.username);
           // 需要在路由跳转前加载字典数据，否则会出现字典数据未加载完成导致页面渲染异常
-          await dictStore.loadDictionaries();
+          // await dictStore.loadDictionaries();
           // 跳转到登录前的页面
           const { path, queryParams } = parseRedirect();
           router.push({ path: path, query: queryParams });

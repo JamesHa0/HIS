@@ -55,12 +55,14 @@ function logout() {
   }).then(() => {
     userStore
       .logout()
-      .then(() => {
-        tagsViewStore.delAllViews();
-      })
-      .then(() => {
-        router.push(`/login?redirect=${route.fullPath}`);
-      });
+      tagsViewStore.delAllViews();
+      router.push(`/login?redirect=${route.fullPath}`);
+      // .then(() => {
+      //   tagsViewStore.delAllViews();
+      // })
+      // .then(() => {
+      //   router.push(`/login?redirect=${route.fullPath}`);
+      // });
   });
 }
 </script>
