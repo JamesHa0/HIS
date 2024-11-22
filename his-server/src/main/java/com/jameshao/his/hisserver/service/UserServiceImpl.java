@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
             if ( parent_id == 0 ) { //一级菜单
                 Map<String,Object> tmp = new HashMap<>();
                 tmp.put("component", data.get("component"));
-                RouteMeta meta = new RouteMeta((String)data.get("name"),(String)data.get("icon"),(Boolean) data.get("visible"),true,(String)data.get("params"));
+                RouteMeta meta = new RouteMeta((String)data.get("name"),(String)data.get("icon"),!(Boolean) data.get("visible"),true,(String)data.get("params"));
                 tmp.put("meta", meta);
                 tmp.put("name", data.get("route_name"));
                 tmp.put("path", data.get("route_path"));
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService{
                     if( ((Long) dd.get("parent_id")).intValue() == (Integer) data.get("id")){
                         Map<String, Object> child = new HashMap<>();
                         child.put("component", data.get("component"));
-                        RouteMeta mm = new RouteMeta((String)dd.get("name"),(String)dd.get("icon"),(Boolean) dd.get("visible"),true,(String)dd.get("params"));
+                        RouteMeta mm = new RouteMeta((String)dd.get("name"),(String)dd.get("icon"),!(Boolean) dd.get("visible"),true,(String)dd.get("params"));
                         child.put("meta", mm);
                         child.put("name", dd.get("route_name"));
                         child.put("path", dd.get("route_path"));
