@@ -1,5 +1,5 @@
 {
-  "name": "vue3-element-admin",
+  "name": "his-zyh-22023237",
   "version": "2.19.0",
   "private": true,
   "type": "module",
@@ -117,7 +117,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "repository": "https://gitee.com/youlaiorg/vue3-element-admin.git",
-  "author": "有来开源组织",
+  "repository": "https://github.com/JamesHa0/HIS",
+  "author": "有来开源组织,JamesHao",
   "license": "MIT"
 }
