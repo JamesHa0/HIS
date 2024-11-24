@@ -3,7 +3,7 @@ import request from "@/utils/request";
 const ConstanttypeAPI = {
   getAll(){
     return request({
-      url:"/constanttype/getall",
+      url:"/constanttype/getAll",
       method:"get"
     })
   },

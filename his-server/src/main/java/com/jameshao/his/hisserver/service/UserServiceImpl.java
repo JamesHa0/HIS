@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService{
                 for (Map<String, Object> dd : dataes){
                     if( ((Long) dd.get("parent_id")).intValue() == (Integer) data.get("id")){
                         Map<String, Object> child = new HashMap<>();
-                        child.put("component", data.get("component"));
+                        child.put("component", dd.get("component"));
                         RouteMeta mm = new RouteMeta((String)dd.get("name"),(String)dd.get("icon"),!(Boolean) dd.get("visible"),true,(String)dd.get("params"));
                         child.put("meta", mm);
                         child.put("name", dd.get("route_name"));
