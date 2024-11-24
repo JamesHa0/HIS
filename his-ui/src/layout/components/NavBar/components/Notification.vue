@@ -171,9 +171,9 @@ const noticeDetailRef = ref();
 
 // 获取未读消息列表并连接 WebSocket
 onMounted(() => {
-  NoticeAPI.getMyNoticePage({ pageNum: 1, pageSize: 5, isRead: 0 }).then((data) => {
-    notices.value = data.list;
-  });
+  // NoticeAPI.getMyNoticePage({ pageNum: 1, pageSize: 5, isRead: 0 }).then((data) => {
+  //   notices.value = data.list;
+  // });
 
   WebSocketManager.subscribeToTopic("/user/queue/message", (message) => {
     console.log("收到消息：", message);

@@ -148,7 +148,7 @@
 <!--      </el-col>-->
 <!--    </el-row>-->
 
-    <NoticeDetail ref="noticeDetailRef" />
+<!--    <NoticeDetail ref="noticeDetailRef" />-->
   </div>
 </template>
 
