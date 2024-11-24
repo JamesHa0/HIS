@@ -1,28 +1,26 @@
 <template>
-  <div>
-    常数类别管理页面
-  </div>
   <el-card class="card1">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-input
           v-model="searchkey"
           style="max-width: 400px"
           placeholder="请输入常数类别编码或名称"
           class="input-with-select"
-        ><template #append>
+        >
+        <template #append>
           <el-button :icon="Search" />
         </template>
         </el-input>
       </el-col>
       <el-col :span="6">
-        <el-button type="success" :icon="Edit" >新增常数类别</el-button>
+        <el-button type="primary" :icon="Edit" >新增常数类别</el-button>
       </el-col>
     </el-row>
   </el-card>
   <el-card>
     <el-table :data="list" border style="width: 100%">
-      <el-table-column prop="id" label="ID" width="180" />
+      <el-table-column prop="id" label="ID" width="150" />
       <el-table-column prop="constanttypecode" label="类别编码" width="180" />
       <el-table-column prop="constanttypename" label="类别名称" width="180" />
       <el-table-column fixed="right" label="操作" min-width="120">
@@ -68,8 +66,10 @@ import ConstanttypeAPI from "@/api/system/constanttype";
 let searchkey ="";
 let list = ref([]);
 let editFormVisible = ref(false);
-let row;
-let editForm = row;
+let editForm = ref({
+  constanttypecode: '',
+  constanttypename: ''
+});
 
 function handleEdit(row:any){
   editForm = row;
@@ -111,10 +111,7 @@ onMounted( ()=>{
 </script>
 
 <style scoped>
-.card1{
-  display: flex;
-  justify-content: space-between;
-}
+
 .el-card{
   margin: 10px;
   padding: 10px;
