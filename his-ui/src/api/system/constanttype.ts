@@ -11,7 +11,7 @@ const ConstanttypeAPI = {
     return request({
       url:"/constanttype/update",
       method:"get",
-      data:data
+      params:data
     })
   }
 }
