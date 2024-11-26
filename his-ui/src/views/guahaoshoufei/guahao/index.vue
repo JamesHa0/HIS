@@ -30,6 +30,12 @@
       <el-table-column prop="age" label="年龄" width="180" />
 
       <el-table-column fixed="right" label="操作" min-width="120">
+        <template #default="scope">
+          <el-button link type="primary" size="small" @click="">
+            编辑
+          </el-button>
+          <el-button link type="primary" size="small" @click="">删除</el-button>
+        </template>
 
       </el-table-column>
     </el-table>
