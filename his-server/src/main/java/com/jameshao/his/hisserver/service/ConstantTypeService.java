@@ -5,6 +5,10 @@ import com.jameshao.his.hisserver.vo.Constanttype;
 import java.util.List;
 
 public interface ConstantTypeService {
-    public List<Constanttype> getAllTypes();
-    public void update(Constanttype type);
+    List<Constanttype> getAllTypes();
+    void update(Constanttype type);
+
+    void add(Constanttype type);
+
+    void delById(int id);
 }

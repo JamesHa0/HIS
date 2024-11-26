@@ -18,4 +18,14 @@ public class ConstantTypeServiceImpl implements ConstantTypeService{
     public void update(Constanttype type) {
         dao.update(type);
     }
+
+    @Override
+    public void add(Constanttype type) {
+        dao.add(type);
+    }
+
+    @Override
+    public void delById(int id) {
+    	dao.delById(id);
+    }
 }

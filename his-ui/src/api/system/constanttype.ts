@@ -13,7 +13,21 @@ const ConstanttypeAPI = {
       method:"get",
       params:data
     })
-  }
+  },
+  add(data:any){
+    return request({
+      url:"/constanttype/add",
+      method:"get",
+      params:data
+    })
+  },
+  delete(data:any){
+    return request({
+      url:"/constanttype/delete",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default ConstanttypeAPI;

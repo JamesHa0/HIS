@@ -30,4 +30,24 @@ public class ConstantTypeServlet extends BaseServlet {
 
         this.writeSuccessJSON(response,null);
     }
+    void add(HttpServletRequest request, HttpServletResponse response){
+        String constanttypecode = request.getParameter("constanttypecode");
+        String constanttypename = request.getParameter("constanttypename");
+        System.out.println("constanttypecode:"+constanttypecode);
+        System.out.println("constanttypename:"+constanttypename);
+        Constanttype type = new Constanttype(null,constanttypecode,constanttypename,1);
+        service.add(type);
+
+        this.writeSuccessJSON(response,"ok");
+    }
+    void delete(HttpServletRequest request, HttpServletResponse response){
+        String id = request.getParameter("id");
+        Integer iid = 0;
+        if(id!=null && id.trim().length() >0){
+            iid = Integer.parseInt(id);
+        }
+        service.delById(iid);
+
+        this.writeSuccessJSON(response,null);
+    }
 }

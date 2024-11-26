@@ -14,21 +14,21 @@
         </el-input>
       </el-col>
       <el-col :span="6">
-        <el-button type="primary" :icon="Edit" >新增常数类别</el-button>
+        <el-button type="primary" :icon="Edit" @click="addFormVisible = true">新增常数类别</el-button>
       </el-col>
     </el-row>
   </el-card>
   <el-card>
-    <el-table :data="list" border style="width: 100%">
-      <el-table-column prop="id" label="ID" width="150" />
-      <el-table-column prop="constanttypecode" label="类别编码" width="180" />
-      <el-table-column prop="constanttypename" label="类别名称" width="180" />
-      <el-table-column fixed="right" label="操作" min-width="120">
-        <template #default="scope">
-          <el-button link type="primary" size="small" @click="handleEdit(scope.row)">
+          <el-table :data="list" border style="width: 100%" :key="tableKey">
+            <el-table-column prop="id" label="ID" width="150" />
+            <el-table-column prop="constanttypecode" label="类别编码" width="180" />
+            <el-table-column prop="constanttypename" label="类别名称" width="180" />
+            <el-table-column fixed="right" label="操作" min-width="120">
+              <template #default="scope">
+                <el-button link type="primary" size="small" @click="handleEdit(scope.row)">
             编辑
           </el-button>
-          <el-button link type="primary" size="small" @click="handleDelete">删除</el-button>
+          <el-button link type="primary" size="small" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,6 +56,28 @@
     </template>
   </el-dialog>
 <!--编辑常数项的对话框  END-->
+
+
+<!--新增常数项的对话框  BEGIN-->
+  <el-dialog v-model="addFormVisible" title="新增常数项" width="500">
+    <el-form :model="addForm">
+      <el-form-item label="常数项编码" :label-width="100">
+        <el-input v-model="addForm.constanttypecode" />
+      </el-form-item>
+      <el-form-item label="常数项名称" :label-width="100">
+        <el-input v-model="addForm.constanttypename" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="addFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleAddFormClosed()">
+          确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
+<!--新增常数项的对话框  END-->
 </template>
 
 <script setup lang="ts">
@@ -63,40 +85,86 @@
 import {Edit, Search} from '@element-plus/icons-vue'
 import ConstanttypeAPI from "@/api/system/constanttype";
 
+let tableKey = ref(0);
 let searchkey ="";
 let list = ref([]);
 let editFormVisible = ref(false);
+let addFormVisible = ref(false);
+let beforeEditForm = ref({
+  constanttypecode: '',
+  constanttypename: ''
+});
 let editForm = ref({
+  constanttypecode: '',
+  constanttypename: ''
+});
+let addForm = reactive({
   constanttypecode: '',
   constanttypename: ''
 });
 
 function handleEdit(row:any){
+  beforeEditForm = row;
   editForm = row;
   editFormVisible.value = true;
 }
-function handleDelete(){
 
+
+
+function handleDelete(row:any){
+  ConstanttypeAPI.delete(row)
+    .then(
+      (data:any) => {
+        //刷新页面
+          ConstanttypeAPI.getAll()
+            .then(
+              (data:any) => {
+                list.value = data;
+                tableKey.value = Date.now();
+              }
+            )
+      }
+    )
 }
 
 function handleEditFormClosed(){
   //使用确定按钮 关闭常数项编辑对话框的回调函数：给后端发请求，修改常数项
   editFormVisible.value = false;
+  console.log(editForm)
   ConstanttypeAPI.update(editForm)
     .then(
       (data:any) => {
         //刷新页面
-        onMounted( ()=>{
           ConstanttypeAPI.getAll()
             .then(
               (data:any) => {
                 list.value = data;
+                tableKey.value = Date.now();
               }
             )
-        })
       }
     )
+}
 
+
+
+function handleAddFormClosed(){
+//使用确定按钮 关闭常数项新增对话框的回调函数：给后端发请求，新增常数项
+  addFormVisible.value = false;
+  console.log(addForm)
+  ConstanttypeAPI.add(addForm)
+    .then(
+      (data:any) => {
+        //刷新页面
+          ConstanttypeAPI.getAll()
+            .then(
+              (data:any) => {
+                list.value = data;
+                tableKey.value = Date.now();
+              }
+            )
+      }
+    )
 }
 
 
