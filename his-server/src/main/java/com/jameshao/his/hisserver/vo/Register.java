@@ -2,11 +2,17 @@ package com.jameshao.his.hisserver.vo;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @TableName register
  */
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Register implements Serializable {
     private Integer id;

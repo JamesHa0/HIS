@@ -8,6 +8,12 @@ const ConstantItemAPI = {
       params:data
     })
   },
+  getAll(){
+    return request({
+      url:"/constantitem/getAll",
+      method:"get",
+    })
+  },
 
 }
 

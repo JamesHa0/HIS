@@ -21,13 +21,13 @@
   </el-card>
 
   <el-card>
-    <el-table :data="list" border style="width: 100%">
-      <el-table-column prop="" label="病历号" width="150" />
-      <el-table-column prop="" label="姓名" width="180" />
-      <el-table-column prop="" label="性别" width="180" />
-      <el-table-column prop="" label="身份证号" width="180" />
-      <el-table-column prop="" label="出生日期" width="180" />
-      <el-table-column prop="" label="年龄" width="180" />
+    <el-table :data="list" border style="width: 100%" >
+      <el-table-column prop="casenumber" label="病历号" width="150" />
+      <el-table-column prop="realname" label="姓名" width="180" />
+      <el-table-column prop="gender" label="性别" width="180" />
+      <el-table-column prop="idnumber" label="身份证号" width="180" />
+<!--      <el-table-column prop="" label="出生日期" v-model="CaseNumber" width="180" />-->
+      <el-table-column prop="age" label="年龄" width="180" />
 
       <el-table-column fixed="right" label="操作" min-width="120">
 
@@ -71,7 +71,7 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleAddFormClosed()">
+        <el-button type="primary" @click="add_register()">
           确定
         </el-button>
       </div>
@@ -84,6 +84,7 @@
 
 import {Edit, Search} from "@element-plus/icons-vue";
 import ConstantItemAPI from "@/api/system/constantitem";
+import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 
 
 let searchkey = ref();
@@ -105,15 +106,23 @@ let genders = ref([
   }
 ])
 
-function handleAddFormClosed(){}
-
-
-
-//患者列表
+//挂号列表
 let list = ref([]);
 
 
-onMounted(()=>{
+//新增挂号
+function add_register(){
+  console.log(addform);
+  GuahaoAPI.add_register(addform)
+    .then(
+      (data) => {
+        console.log(data);
+      }
+    )
+}
+
+//获取性别常数项
+function get_gender(){
   let param = {
     id:7 //7对应性别的字典组
   }
@@ -122,8 +131,22 @@ onMounted(()=>{
       (data:any)=>{
         genders.value = data
       }
-
     )
+}
+
+//获取列表
+function get_list(){
+  GuahaoAPI.getall()
+    .then(
+      (data:any)=>{
+        list.value = data
+      }
+    )
+}
+
+onMounted(()=>{
+  get_list();
+  get_gender();
 })
 </script>
 
