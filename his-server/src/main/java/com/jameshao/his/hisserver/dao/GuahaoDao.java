@@ -8,4 +8,6 @@ public interface GuahaoDao {
     int insertOne(Register register);
 
     List<Register> queryAll();
+
+    List<Register> queryOneByName(String name);
 }

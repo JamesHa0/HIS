@@ -33,4 +33,9 @@ public class GuahaoDaoImpl extends BaseDao implements GuahaoDao{
     public List<Register> queryAll() {
         return this.executeQuery("select * from register",Register.class);
     }
+
+    @Override
+    public List<Register> queryOneByName(String name) {
+        return this.executeQuery("select * from register where RealName like ?",Register.class,"%"+name+"%");
+    }
 }

@@ -18,4 +18,9 @@ public class GuahaoServiceImpl implements GuahaoService{
     public List<Register> getAll() {
         return dao.queryAll();
     }
+
+    @Override
+    public List<Register> search(String name) {
+        return dao.queryOneByName(name);
+    }
 }

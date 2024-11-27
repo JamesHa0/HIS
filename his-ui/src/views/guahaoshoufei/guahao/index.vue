@@ -3,13 +3,14 @@
     <el-row>
       <el-col :span="8">
         <el-input
-          v-model="searchkey"
+          v-model="search_name"
           style="max-width: 400px"
           placeholder="请输入患者姓名"
           class="input-with-select"
+          @keyup.enter="search(search_name)"
         >
           <template #append>
-            <el-button :icon="Search" />
+            <el-button :icon="Search" @click="search(search_name)"/>
           </template>
         </el-input>
       </el-col>
@@ -21,7 +22,7 @@
   </el-card>
 
   <el-card>
-    <el-table :data="list" border style="width: 100%" >
+    <el-table :data="list" border style="width: 100%" :key="tableKey">
       <el-table-column prop="casenumber" label="病历号" width="150" />
       <el-table-column prop="realname" label="姓名" width="180" />
       <el-table-column prop="gender" label="性别" width="180" />
@@ -92,8 +93,8 @@ import {Edit, Search} from "@element-plus/icons-vue";
 import ConstantItemAPI from "@/api/system/constantitem";
 import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 
-
-let searchkey = ref();
+let tableKey = ref(0);
+let search_name = ref();
 let addFormVisible = ref(false);
 let addform = reactive({
   casenumber:'',
@@ -115,6 +116,18 @@ let genders = ref([
 //挂号列表
 let list = ref([]);
 
+//模糊搜索
+function search (search_name: string){
+  console.log(search_name)
+  GuahaoAPI.search({search_name: search_name})
+    .then(
+      (data:any) => {
+        console.log(data)
+        list.value = data;
+        tableKey.value = Date.now();
+      }
+    )
+}
 
 //新增挂号
 function add_register(){
@@ -123,6 +136,7 @@ function add_register(){
     .then(
       (data) => {
         console.log(data);
+        get_list();
       }
     )
 }
@@ -145,7 +159,8 @@ function get_list(){
   GuahaoAPI.getall()
     .then(
       (data:any)=>{
-        list.value = data
+        list.value = data;
+        tableKey.value = Date.now();
       }
     )
 }

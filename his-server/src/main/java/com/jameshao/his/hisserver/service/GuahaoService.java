@@ -9,6 +9,8 @@ public interface GuahaoService {
 
     int add(Register register);
 
-    List getAll();
+    List<Register> getAll();
+
+    List<Register> search(String search_name);
 
 }

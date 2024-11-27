@@ -14,6 +14,13 @@ const GuahaoAPI = {
       params:data
     })
   },
+  search(searchParams: { search_name: string }){
+    return request({
+      url:"/guahao/search",
+      method:"get",
+      params:searchParams
+    })
+  },
   update(data:any){
     return request({
       url:"/guahao/update",
