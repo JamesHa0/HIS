@@ -5,7 +5,7 @@ import com.jameshao.his.hisserver.vo.Register;
 
 import java.util.List;
 
-public interface GuahaoService {
+public interface RegisterService {
 
     int add(Register register);
 

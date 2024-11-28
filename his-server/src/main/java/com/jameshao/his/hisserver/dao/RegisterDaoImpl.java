@@ -5,7 +5,7 @@ import com.jameshao.his.hisserver.vo.Register;
 import java.util.Date;
 import java.util.List;
 
-public class GuahaoDaoImpl extends BaseDao implements GuahaoDao{
+public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     public int insertOne(Register register) {
         String sql = "insert into register(" +
                 "casenumber,realname,gender,idnumber,age,visitdate,noon,deptid,userid,registleid,settleid,registtime,registerid" +

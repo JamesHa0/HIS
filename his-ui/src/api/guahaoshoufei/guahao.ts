@@ -3,27 +3,27 @@ import request from "@/utils/request";
 const GuahaoAPI = {
   getall(){
     return request({
-      url:"/guahao/getAll",
+      url:"/register/getAll",
       method:"get",
     })
   },
   add_register(data:any){
     return request({
-      url:"/guahao/add",
+      url:"/register/add",
       method:"get",
       params:data
     })
   },
   search(searchParams: { search_name: string }){
     return request({
-      url:"/guahao/search",
+      url:"/register/search",
       method:"get",
       params:searchParams
     })
   },
   update(data:any){
     return request({
-      url:"/guahao/update",
+      url:"/register/update",
       method:"get",
       params:data
     })

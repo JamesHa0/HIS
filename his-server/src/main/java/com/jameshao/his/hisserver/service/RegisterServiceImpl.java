@@ -1,14 +1,14 @@
 package com.jameshao.his.hisserver.service;
 
-import com.jameshao.his.hisserver.dao.GuahaoDao;
-import com.jameshao.his.hisserver.dao.GuahaoDaoImpl;
+import com.jameshao.his.hisserver.dao.RegisterDao;
+import com.jameshao.his.hisserver.dao.RegisterDaoImpl;
 import com.jameshao.his.hisserver.vo.Register;
 
 import java.util.List;
 
-public class GuahaoServiceImpl implements GuahaoService{
+public class RegisterServiceImpl implements RegisterService {
 
-    GuahaoDao dao = new GuahaoDaoImpl();
+    RegisterDao dao = new RegisterDaoImpl();
     @Override
     public int add(Register register) {
         return dao.insertOne(register);
