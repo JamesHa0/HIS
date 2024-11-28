@@ -41,6 +41,8 @@ public class BaseDao {
             }
         }catch (Exception e){
             e.printStackTrace();
+        } finally {
+            DbHelper.closeConn(conn,rs,pst);
         }
         return list;
     }
