@@ -1,0 +1,68 @@
+前端：
+1.显示
+	.vue文件
+2.连接服务端
+	.ts文件
+
+
+
+服务端：
+3.servlet控制层（数据交换 和 前后端对接）
+		
+4.service数据（业务）处理
+	接口（service）+实现类(serviceImpl)
+5.DAO连接数据库
+	接口（dao）实现类（daoImpl）
+
+
+
+1  .vue
+	1）显示内容、事件等
+	2）连接服务端
+		//引用ts
+		import ...API from '@/api/...ts'
+		//调用ts
+		...API.方法名(参数).then(
+			(data)=>{
+				//处理步骤
+			}
+		)
+
+
+2  .ts
+	1）定义方法
+		方法名(){
+			return request({
+				url:"/servlet通用路径/服务端方法名",		//服务端网址
+				method:"get",
+				params:参数
+			})
+		}
+
+
+3  servlet 控制层
+	@WebServlet("/通用路径/*")
+	class ...Servlet extends BaseServlet{
+		void 方法名(Http....request,......response) {
+			this.writeSuccessJSON/writeErrorJSON(response,要返回的值)
+		}
+	}
+
+4  service 层
+	interface ...Service{
+		//方法声明
+	}
+
+	class ...ServiceImpl implements ...Service{
+		...Dao dao = new ..DaoImpl;
+		//方法实现
+	}
+
+5  DAO 层 
+	interface ...Dao{
+		//方法声明
+	}
+
+	class ...DaoImpl entends BaseDao implements ...Dao{
+		//方法实现
+	}
