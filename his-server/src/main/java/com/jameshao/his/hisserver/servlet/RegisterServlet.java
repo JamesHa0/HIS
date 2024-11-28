@@ -33,11 +33,19 @@ public class RegisterServlet extends BaseServlet{
     	this.writeSuccessJSON(response,list);
     }
 
-    public void get_by_belong(HttpServletRequest request, HttpServletResponse response){
+    public void getByBelong(HttpServletRequest request, HttpServletResponse response){
+        String sid = request.getParameter("id");
         String belong = request.getParameter("belong");
+        String state = request.getParameter("state");
+        System.out.println("id:"+sid);
         System.out.println("belong:"+belong);
-//        List<Register> list = guahaoService.get_by_belong(belong);
-        this.writeSuccessJSON(response,null);
+        System.out.println("state:"+state);
+        Integer id = null;
+        if (sid != null && (!"".equals(sid))){
+            id = Integer.parseInt(sid);
+        }
+        List<Register> list = registerService.getByBelong(id,belong,state);
+        this.writeSuccessJSON(response,list);
     }
 
 }

@@ -13,4 +13,6 @@ public interface RegisterService {
 
     List<Register> search(String search_name);
 
+    List<Register> getByBelong(int id,String belong,String state);
+
 }

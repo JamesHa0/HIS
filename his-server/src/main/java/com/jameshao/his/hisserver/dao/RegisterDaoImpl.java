@@ -38,4 +38,25 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     public List<Register> queryOneByName(String name) {
         return this.executeQuery("select * from register where RealName like ?",Register.class,"%"+name+"%");
     }
+
+    @Override
+    public List<Register> queryByBelong(int id, String belong, String state) {
+        System.out.println("id:"+id);
+        System.out.println("belong:"+belong);
+        System.out.println("state:"+state);
+        StringBuffer sql = new StringBuffer("select * from register where ");
+        if("doc".equals(belong)){
+            sql.append("UserID = "+id);
+        }else if("dept".equals(belong)){
+            sql.append("DeptID = "+id);
+        }
+        sql.append(" and ");
+        if("visit".equals(state)){
+            sql.append("VisitState = 1");
+        }else if("unvisit".equals(state)){
+            sql.append("VisitState > 1");
+        }
+        System.out.println(sql.toString());
+        return this.executeQuery(sql.toString(),Register.class);
+    }
 }

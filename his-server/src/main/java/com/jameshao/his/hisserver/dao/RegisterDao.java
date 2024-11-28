@@ -10,4 +10,6 @@ public interface RegisterDao {
     List<Register> queryAll();
 
     List<Register> queryOneByName(String name);
+
+    List<Register> queryByBelong(int id,String belong,String state);
 }
