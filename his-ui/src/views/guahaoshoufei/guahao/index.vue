@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-card class="card1">
     <el-row>
       <el-col :span="8">
@@ -85,6 +86,7 @@
     </template>
   </el-dialog>
   <!--添加挂号信息的对话框  END-->
+  </div>
 </template>
 
 <script setup lang="ts">

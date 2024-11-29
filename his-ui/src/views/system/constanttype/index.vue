@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-card class="card1">
     <el-row>
       <el-col :span="8">
@@ -78,6 +79,7 @@
     </template>
   </el-dialog>
 <!--新增常数项的对话框  END-->
+  </div>
 </template>
 
 <script setup lang="ts">
