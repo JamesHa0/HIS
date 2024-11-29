@@ -1,11 +1,16 @@
 package com.jameshao.his.hisserver.vo;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @TableName medicalrecord
  */
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Medicalrecord implements Serializable {
     private Integer id;

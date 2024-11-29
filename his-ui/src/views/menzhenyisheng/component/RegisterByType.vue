@@ -1,5 +1,9 @@
 <template>
-  <el-table :data="list" style="width: 100%" :key="tableKey" border>
+  <el-table :data="list"
+            style="width: 100%"
+            :key="tableKey"
+            highlight-current-row
+            @current-change="row_change">
     <el-table-column prop="casenumber" label="病历号" width="150" />
     <el-table-column prop="realname" label="姓名" width="180" />
     <el-table-column prop="age" label="年龄" width="180" />
@@ -31,6 +35,13 @@ function getbybelong(){
       tableKey.value = Date.now();
     })
 }
+
+const emit = defineEmits(['selectone']);
+
+const row_change = (row:any) =>{
+  emit('selectone',row);
+}
+
 
 onMounted(()=>{
   getbybelong()

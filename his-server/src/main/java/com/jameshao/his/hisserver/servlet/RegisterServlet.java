@@ -37,6 +37,7 @@ public class RegisterServlet extends BaseServlet{
         String sid = request.getParameter("id");
         String belong = request.getParameter("belong");
         String state = request.getParameter("state");
+        System.out.println("----------------");
         System.out.println("id:"+sid);
         System.out.println("belong:"+belong);
         System.out.println("state:"+state);

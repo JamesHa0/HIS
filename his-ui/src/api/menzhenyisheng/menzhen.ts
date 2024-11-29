@@ -8,6 +8,13 @@ const MenzhenAPI = {
       params:data
     })
   },
+  add_record(data:any){
+    return request({
+      url:"/record/add_one",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default MenzhenAPI;
