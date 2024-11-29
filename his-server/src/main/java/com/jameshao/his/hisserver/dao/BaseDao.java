@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class BaseDao {
-    private Connection conn = null;
+    //private Connection conn = null;
     //private ResultSet rs = null;
     //private PreparedStatement pst = null;
 
 	public List<Map<String, Object>> executeQuery(String sql,Object... args)  {
+        Connection conn = null;
         conn = DbHelper.getConnection();
         List<Map<String, Object>> list = new ArrayList<>();
         PreparedStatement pst = null;
@@ -51,6 +52,7 @@ public class BaseDao {
      */
 
     public <T> List<T> executeQuery(String sql,Class<T> clazz,Object... args){
+        Connection conn = null;
         conn = DbHelper.getConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -119,6 +121,7 @@ public class BaseDao {
     public int saveOrUpdate(String sql,Object... args){
         PreparedStatement pst = null;
         ResultSet rs = null;
+        Connection conn = null;
         conn = DbHelper.getConnection();
         try{
            pst = conn.prepareStatement(sql);
