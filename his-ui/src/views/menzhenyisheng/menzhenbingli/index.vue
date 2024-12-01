@@ -46,6 +46,7 @@
 
 <!--          标签页-->
           <el-tabs type="border-card">
+<!--            病例首页-->
             <el-tab-pane label="病例首页">
               <el-row justify="center">
                 <el-col :span="6" style="background-color: #EAF1F5">
@@ -55,7 +56,7 @@
                   <el-button type="primary" @click="submit" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
                 </el-col>
                 <el-col :span="6" style="background-color: #EAF1F5">
-                  <el-button type="primary" @click="" text><el-icon><Printer /></el-icon>清空所有</el-button>
+                  <el-button type="primary" @click="" text><el-icon><CircleCloseFilled /></el-icon>清空所有</el-button>
                 </el-col>
                 <el-col :span="6" style="background-color: #EAF1F5">
                   <el-button type="primary" @click="" text><el-icon><Refresh /></el-icon>刷新</el-button>
@@ -122,30 +123,67 @@
                   <el-button type="primary" @click="" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
                 </el-form-item>
               </el-form>
-
-
-
-
             </el-tab-pane>
 
+<!--            检查申请-->
             <el-tab-pane label="检查申请">
-              //todo
+              <el-row justify="center">
+                <el-col :span="6" style="background-color: #EAF1F5">
+                  <el-button type="primary" @click="" text><el-icon><Tickets /></el-icon>修改</el-button>
+                </el-col>
+                <el-col :span="6" style="background-color: #EAF1F5">
+                  <el-button type="primary" @click="showinspcetitem" text><el-icon><CircleCheckFilled /></el-icon>新增</el-button>
+                </el-col>
+                <el-col :span="6" style="background-color: #EAF1F5">
+                  <el-button type="primary" @click="" text><el-icon><CircleCloseFilled /></el-icon>删除</el-button>
+                </el-col>
+                <el-col :span="6" style="background-color: #EAF1F5">
+                  <el-button type="primary" @click="" text><el-icon><Refresh /></el-icon>刷新</el-button>
+                </el-col>
+              </el-row>
+
+
+              <el-table :data="inspectlist"
+                        style="width: 100%"
+                        :key="tableKey">
+                <el-table-column prop="name" label="项目名称" width="180" />
+                <el-table-column prop="price" label="项目价格" width="180" />
+                <el-table-column prop="result" label="检查结果" width="180" />
+                <el-table-column prop="status" label="状态" width="180" />
+              </el-table>
             </el-tab-pane>
           </el-tabs>
         </el-col>
       </el-row>
     </el-card>
+
+
+    <!--新增检查项的对话框  BEGIN-->
+    <el-dialog v-model="inspectVisible" title="新增检查项" width="500">
+      <el-table :data="inspectitemlist"
+                style="width: 100%"
+                :key="tableKey"
+                highlight-current-row
+                @current-change="">
+        <el-table-column prop="name" label="项目名称" width="200" />
+        <el-table-column prop="price" label="项目价格" width="200" />
+      </el-table>
+    </el-dialog>
+    <!--新增检查项的对话框  END-->
   </div>
 </template>
 
 <script setup lang="ts">
 
-import {Search,Refresh,CircleCheckFilled,Tickets,Printer} from "@element-plus/icons-vue";
+import {Search,Refresh,CircleCheckFilled,Tickets,CircleCloseFilled} from "@element-plus/icons-vue";
 import RegisterByType from "@/views/menzhenyisheng/component/RegisterByType.vue";
 import {defineProps, defineEmits, toRefs, ref} from 'vue'
 import {useUserStore} from "@/store/modules/user";
 import MenzhenAPI from "@/api/menzhenyisheng/menzhen";
+import InspectAPI from "@/api/menzhenyisheng/inspect";
 
+
+let inspectlist = ref([]);
 let tableKey = ref(0);
 let searchkey = ref();
 let msg = ref({
@@ -174,6 +212,8 @@ let chosenregister = ref({
   casenumber:'',
   id:'',
 });
+let inspectVisible = ref(false);
+let inspectitemlist = ref([]);
 
 
 function handleChildSelected(value:any){
@@ -203,6 +243,15 @@ function submit(){
       }
     )
   }
+}
+
+function showinspcetitem() {
+  InspectAPI.getallinspect().then(
+    (data) => {
+      console.log(data);
+      inspectitemlist.value = data;
+      inspectVisible.value = true;
+    })
 }
 
 

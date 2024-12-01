@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jameshao.his.hisserver.mapper.InspectApplyMapper">
+
+    <resultMap id="BaseResultMap" type="com.jameshao.his.hisserver.vo.InspectApply">
+            <id property="itemId" column="item_id" jdbcType="INTEGER"/>
+            <result property="inspectId" column="inspect_id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="registId" column="regist_id" jdbcType="INTEGER"/>
+            <result property="price" column="price" jdbcType="DECIMAL"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="result" column="result" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        item_id,inspect_id,name,
+        regist_id,price,status,
+        result
+    </sql>
+</mapper>

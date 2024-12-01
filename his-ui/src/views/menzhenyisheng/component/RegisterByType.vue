@@ -4,9 +4,9 @@
             :key="tableKey"
             highlight-current-row
             @current-change="row_change">
-    <el-table-column prop="casenumber" label="病历号" width="150" />
-    <el-table-column prop="realname" label="姓名" width="180" />
-    <el-table-column prop="age" label="年龄" width="180" />
+    <el-table-column prop="casenumber" label="病历号" width="125" />
+    <el-table-column prop="realname" label="姓名" width="125" />
+    <el-table-column prop="age" label="年龄" width="125" />
   </el-table>
 
 </template>
