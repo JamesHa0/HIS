@@ -2,21 +2,21 @@
   <div>
     <el-row justify="center">
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="update" :disabled="!savedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
+        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5" >
-        <el-button type="primary" @click="save" :disabled="!updatedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
+        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>保存</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
         <el-button type="primary" @click="clearForm" text><el-icon><CircleCloseFilled /></el-icon>清空所有</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="refresh" text><el-icon><Refresh /></el-icon>//刷新</el-button>
+        <el-button type="primary" @click="refresh" text><el-icon><Refresh /></el-icon>刷新</el-button>
       </el-col>
     </el-row>
 
 
-    <el-form class="form1" :model="recordform">
+    <el-form class="form1" :model="recordform" :key="formKey">
       <lebel class="label1">病史内容：</lebel>
       <el-form-item label="主诉" :label-width="100">
         <el-input class="test" v-model="recordform.readme" type="textarea" />
@@ -43,25 +43,6 @@
       </el-form-item>
 
       <lebel class="label1">评估/诊断：</lebel>
-      <el-card>
-        <template #header>
-          <div class="card-header">
-            <span>西医诊断</span>
-          </div>
-        </template>
-        //todo
-
-      </el-card>
-
-      <el-card>
-        <template #header>
-          <div class="card-header">
-            <span>中医诊断</span>
-          </div>
-        </template>
-        //todo
-
-      </el-card>
 
       <el-form-item label="检查建议" :label-width="100">
         <el-input v-model="recordform.proposal" type="textarea" />
@@ -72,7 +53,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
+        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
+        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -84,7 +66,7 @@ import {CircleCheckFilled, CircleCloseFilled, Refresh, Tickets} from "@element-p
 import {ref} from "vue";
 import MenzhenAPI from "@/api/menzhenyisheng/menzhen";
 
-let tableKey = ref(0);
+let formKey = ref(0);
 let recordform = ref({
   registid:'',//挂号id
   readme:'',//主诉
@@ -108,8 +90,8 @@ let oneregist = reactive({})
 
 function save(){
   let params = recordform;
-  params.value.casenumber = oneregist.value.casenumber;
-  params.value.registid= oneregist.value.id;
+  params.value.casenumber = oneregist.casenumber;
+  params.value.registid= oneregist.id;
 
   console.log(params.value.casenumber);
 
@@ -119,11 +101,11 @@ function save(){
   } else{
     MenzhenAPI.add_record(params.value).then(
       (data) => {
-        //todo:提交表单到数据库
         console.log(data);
       }
     )
   }
+  refresh()
 }
 
 
@@ -134,7 +116,10 @@ function update() {
   if(params.value.casenumber === undefined || params.value.casenumber === null || params.value.casenumber === ''){
     ElMessage.error('请先选择患者！');
     return;
+  } else{
+    //todo:更新病例
   }
+  refresh()
 }
 
 const onRegisterChange = (value:any) => {
@@ -142,11 +127,10 @@ const onRegisterChange = (value:any) => {
   clearForm()
 
   let params = {
-    id:value.id
+    regist_id:value.id
   }
-  MenzhenAPI.get_one_by_id(params).then(
+  MenzhenAPI.get_one_by_regist(params).then(
     (data)=>{
-      console.log(data)
       if(data != null && data != undefined){
         recordform.value = data
         savedbuttonable.value = false
@@ -173,6 +157,8 @@ function clearForm(){
   recordform.value.diagnosis = ''
   recordform.value.proposal = ''
   recordform.value.careful = ''
+  savedbuttonable.value = false
+  updatedbuttonable.value = false
 }
 
 
@@ -181,7 +167,7 @@ defineExpose({
 })
 
 function refresh(){
-  //todo 刷新form表单内容
+  formKey.value = Date.now();
 }
 
 </script>

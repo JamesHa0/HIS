@@ -2,6 +2,8 @@ package com.jameshao.his.hisserver.dao;
 
 import com.jameshao.his.hisserver.vo.Medicalrecord;
 
+import java.util.List;
+
 public class MedicalRecordDaoImpl extends BaseDao implements MedicalRecordDao{
     @Override
     public int insertOne(Medicalrecord medicalrecord) {
@@ -24,5 +26,12 @@ public class MedicalRecordDaoImpl extends BaseDao implements MedicalRecordDao{
                 medicalrecord.getCasestate());
         System.out.println("add:"+count);
         return count;
+    }
+
+    @Override
+    public List<Medicalrecord> getByRegistId(int RegistId) {
+        StringBuffer sql = new StringBuffer("select * from MedicalRecord where RegistID=?");
+        List<Medicalrecord> list = this.executeQuery(sql.toString(),Medicalrecord.class,RegistId);
+        return list;
     }
 }

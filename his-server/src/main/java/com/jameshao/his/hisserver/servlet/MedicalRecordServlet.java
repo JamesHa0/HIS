@@ -8,6 +8,7 @@ import com.jameshao.his.hisserver.vo.Medicalrecord;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @WebServlet("/record/*")
 public class MedicalRecordServlet extends BaseServlet{
@@ -23,13 +24,19 @@ public class MedicalRecordServlet extends BaseServlet{
             this.writeErrorJSON(response,"添加失败！");
         }
     }
-    public void get_one_by_id (HttpServletRequest request, HttpServletResponse response){
-        String sid = request.getParameter("id");
-        Integer id =null;
+    public void get_one_by_regist (HttpServletRequest request, HttpServletResponse response){
+        String sid = request.getParameter("regist_id");
+        Integer RegistId =null;
         if(sid!=null && sid.trim().length() >0){
-            id = Integer.parseInt(sid);
+            RegistId = Integer.parseInt(sid);
+            List<Medicalrecord> list = medicalRecordService.getByRegistId(RegistId);
+            if(list.size()==0){
+                this.writeSuccessJSON(response,null);
+            }else{
+                this.writeSuccessJSON(response,list.get(0));
+            }
+        }else {
+            this.writeErrorJSON(response,"未获得患者病例！");
         }
-
-        this.writeSuccessJSON(response,"get one by id okk");
     }
 }

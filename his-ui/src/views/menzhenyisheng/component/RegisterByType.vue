@@ -50,7 +50,6 @@ function getbybelong(){
   MenzhenAPI.get_by_belong(msg.value).then(
     (data:any) => {
       list.value = data;
-      console.log(list.value);
     })
 }
 onMounted(()=>{

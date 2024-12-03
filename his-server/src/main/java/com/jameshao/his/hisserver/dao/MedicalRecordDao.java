@@ -2,6 +2,10 @@ package com.jameshao.his.hisserver.dao;
 
 import com.jameshao.his.hisserver.vo.Medicalrecord;
 
+import java.util.List;
+
 public interface MedicalRecordDao {
-    public int insertOne(Medicalrecord medicalrecord);
+    int insertOne(Medicalrecord medicalrecord);
+
+    List<Medicalrecord> getByRegistId(int RegistId);
 }

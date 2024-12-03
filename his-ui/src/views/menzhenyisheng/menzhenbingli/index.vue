@@ -64,7 +64,7 @@
           <el-tabs type="border-card">
 <!--            病例首页-->
             <el-tab-pane label="病例首页">
-              <case :msg="chosenregister" />
+              <case ref="caseMethods" />
             </el-tab-pane>
 
 <!--            检查申请-->
@@ -148,7 +148,6 @@ function RegisterClearSelExceptCurrent(info:any){
 }
 
 const CaseOnRegisterSelChange=(value:any)=>{
-  console.log('Case component emitted onRegisterChange:', value);
   if (caseMethods.value){
     caseMethods.value.onRegisterChange(value);
   }
@@ -164,11 +163,6 @@ const setSelectedRegisterToInspect = (info:any) =>{
 function refresh(){
   tableKey.value = Date.now();
 }
-
-
-
-
-
 
 
 

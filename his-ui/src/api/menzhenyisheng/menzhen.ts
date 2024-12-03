@@ -15,9 +15,9 @@ const MenzhenAPI = {
       params:data
     })
   },
-  get_one_by_id(data:any){
+  get_one_by_regist(data:any){
     return request({
-      url:"/record/get_one_by_id",
+      url:"/record/get_one_by_regist",
       method:"get",
       params:data
     })
