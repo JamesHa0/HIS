@@ -23,4 +23,13 @@ public class MedicalRecordServlet extends BaseServlet{
             this.writeErrorJSON(response,"添加失败！");
         }
     }
+    public void get_one_by_id (HttpServletRequest request, HttpServletResponse response){
+        String sid = request.getParameter("id");
+        Integer id =null;
+        if(sid!=null && sid.trim().length() >0){
+            id = Integer.parseInt(sid);
+        }
+
+        this.writeSuccessJSON(response,"get one by id okk");
+    }
 }

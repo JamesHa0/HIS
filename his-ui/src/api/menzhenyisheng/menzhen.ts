@@ -15,6 +15,13 @@ const MenzhenAPI = {
       params:data
     })
   },
+  get_one_by_id(data:any){
+    return request({
+      url:"/record/get_one_by_id",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default MenzhenAPI;

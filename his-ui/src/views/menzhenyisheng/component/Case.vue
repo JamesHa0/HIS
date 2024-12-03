@@ -1,0 +1,200 @@
+<template>
+  <div>
+    <el-row justify="center">
+      <el-col :span="6" style="background-color: #EAF1F5">
+        <el-button type="primary" @click="update" :disabled="!savedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
+      </el-col>
+      <el-col :span="6" style="background-color: #EAF1F5" >
+        <el-button type="primary" @click="save" :disabled="!updatedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
+      </el-col>
+      <el-col :span="6" style="background-color: #EAF1F5">
+        <el-button type="primary" @click="clearForm" text><el-icon><CircleCloseFilled /></el-icon>清空所有</el-button>
+      </el-col>
+      <el-col :span="6" style="background-color: #EAF1F5">
+        <el-button type="primary" @click="refresh" text><el-icon><Refresh /></el-icon>//刷新</el-button>
+      </el-col>
+    </el-row>
+
+
+    <el-form class="form1" :model="recordform">
+      <lebel class="label1">病史内容：</lebel>
+      <el-form-item label="主诉" :label-width="100">
+        <el-input class="test" v-model="recordform.readme" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="现病史" :label-width="100">
+        <el-input v-model="recordform.present" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="现病治疗情况" :label-width="100">
+        <el-input v-model="recordform.presenttreat" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="既往史" :label-width="100">
+        <el-input v-model="recordform.history" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="过敏史" :label-width="100">
+        <el-input v-model="recordform.allergy" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="体格检查" :label-width="100">
+        <el-input v-model="recordform.physique" type="textarea" />
+      </el-form-item>
+
+      <lebel class="label1">评估/诊断：</lebel>
+      <el-card>
+        <template #header>
+          <div class="card-header">
+            <span>西医诊断</span>
+          </div>
+        </template>
+        //todo
+
+      </el-card>
+
+      <el-card>
+        <template #header>
+          <div class="card-header">
+            <span>中医诊断</span>
+          </div>
+        </template>
+        //todo
+
+      </el-card>
+
+      <el-form-item label="检查建议" :label-width="100">
+        <el-input v-model="recordform.proposal" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="注意事项" :label-width="100">
+        <el-input v-model="recordform.careful" type="textarea" />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="" text><el-icon><CircleCheckFilled /></el-icon>提交</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script setup lang="ts">
+
+import {CircleCheckFilled, CircleCloseFilled, Refresh, Tickets} from "@element-plus/icons-vue";
+import {ref} from "vue";
+import MenzhenAPI from "@/api/menzhenyisheng/menzhen";
+
+let tableKey = ref(0);
+let recordform = ref({
+  registid:'',//挂号id
+  readme:'',//主诉
+  present:'',//现病史
+  presenttreat:'',//现病治疗情况
+  history:'',//既往史
+  allergy:'',//过敏史
+  physique:'',//体格检查
+  checkresult:'',//检查结果
+  diagnosis:'',//诊断结果
+  proposal:'',//检查建议
+  careful:'',//注意事项
+  casenumber:'',//病历号
+});
+
+let savedbuttonable = ref(false)
+let updatedbuttonable = ref(false)
+
+let oneregist = reactive({})
+
+
+function save(){
+  let params = recordform;
+  params.value.casenumber = oneregist.value.casenumber;
+  params.value.registid= oneregist.value.id;
+
+  console.log(params.value.casenumber);
+
+  if(params.value.casenumber === undefined || params.value.casenumber === null || params.value.casenumber === ''){
+    ElMessage.error('请先选择患者！');
+    return;
+  } else{
+    MenzhenAPI.add_record(params.value).then(
+      (data) => {
+        //todo:提交表单到数据库
+        console.log(data);
+      }
+    )
+  }
+}
+
+
+function update() {
+  let params = recordform
+  params.value.casenumber = oneregist.casenumber
+
+  if(params.value.casenumber === undefined || params.value.casenumber === null || params.value.casenumber === ''){
+    ElMessage.error('请先选择患者！');
+    return;
+  }
+}
+
+const onRegisterChange = (value:any) => {
+  oneregist = value
+  clearForm()
+
+  let params = {
+    id:value.id
+  }
+  MenzhenAPI.get_one_by_id(params).then(
+    (data)=>{
+      console.log(data)
+      if(data != null && data != undefined){
+        recordform.value = data
+        savedbuttonable.value = false
+        updatedbuttonable.value = true
+      } else{
+        clearForm()
+        savedbuttonable.value = true
+        updatedbuttonable.value = false
+      }
+    }
+  )
+}
+
+function clearForm(){
+  recordform.value.readme = ''
+  recordform.value.present = ''
+  recordform.value.presenttreat = ''
+  recordform.value.history = ''
+  recordform.value.allergy = ''
+  recordform.value.physique = ''
+  recordform.value.checkresult = ''
+  recordform.value.casenumber = ''
+  recordform.value.registid = ''
+  recordform.value.diagnosis = ''
+  recordform.value.proposal = ''
+  recordform.value.careful = ''
+}
+
+
+defineExpose({
+  onRegisterChange
+})
+
+function refresh(){
+  //todo 刷新form表单内容
+}
+
+</script>
+
+<style scoped>
+.label1 {
+  color: #888888;
+  width:100px;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: #e6f7ff;
+  display: block;
+  border: solid 1px #bfcbd9;
+  margin-bottom:5px;
+}
+</style>
