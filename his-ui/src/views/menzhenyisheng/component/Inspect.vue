@@ -104,41 +104,43 @@ function showinspcetitem() {
 
 function addtoRegist(){
   // 判断是否选中患者
-  if(currentSelectedRow.value === undefined || currentSelectedRow.value == null){
+  console.log("选中的id：",currentSelectedRow.id)
+  if(currentSelectedRow === undefined || currentSelectedRow == null || !currentSelectedRow.id){
     alert("请先选择患者");
     return;
-  }
-
-  // 获取选中的行数据
-  let params = reactive([]);
-  for(let i = 0; i < selectedItemRows.length;i++){
-    let row = selectedItemRows.value[i];
-    let oneline = reactive({
-      inspectid:row.inspectid,
-      name:row.name,
-      price:row.price,
-      registid:currentSelectedRow.id,
-      status:1,
-    })
-    params.push(oneline);
-  }
-
-  let strParams = JSON.stringify(params);
-
-  let toServletParams = {
-    data:strParams
-  }
-  InspectAPI.add_many_apply(toServletParams).then(
-    (data) => {
-      console.log(data);
+  } else{
+    // 获取选中的行数据
+    let params = reactive([]);
+    for(let i = 0; i < selectedItemRows.length;i++){
+      let row = selectedItemRows[i];
+      let oneline = reactive({
+        inspectid:row.inspectid,
+        name:row.name,
+        price:row.price,
+        registid:currentSelectedRow.id,
+        status:1,
+      })
+      params.push(oneline);
     }
-  )
+    if (params.length === 0){
+      alert("请先选择检查项");
+    } else{
+      let strParams = JSON.stringify(params);
+      let toServletParams = {
+        data:strParams
+      }
+      InspectAPI.add_many_apply(toServletParams).then(
+        (data) => {
+          console.log(data);
+        }
+      )
+      clearItemSels;
+      inspectVisible.value = false;
+      alert("检查项已添加！");
+    }
+  }
 
-  alert("save now")
-  clearItemSels;
 
-
-  inspectVisible.value = false;
 }
 
 // 取消按钮

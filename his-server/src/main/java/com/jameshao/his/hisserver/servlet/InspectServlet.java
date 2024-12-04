@@ -1,6 +1,8 @@
 package com.jameshao.his.hisserver.servlet;
 
 import com.alibaba.fastjson2.JSONArray;
+import com.jameshao.his.hisserver.service.InspectApplyService;
+import com.jameshao.his.hisserver.service.InspectApplyServiceImpl;
 import com.jameshao.his.hisserver.service.InspectService;
 import com.jameshao.his.hisserver.service.InspectServiceImpl;
 import com.jameshao.his.hisserver.vo.InspectApply;
@@ -15,6 +17,7 @@ import java.util.List;
 @WebServlet("/inspect/*")
 public class InspectServlet extends BaseServlet{
     InspectService inspectService = new InspectServiceImpl();
+    InspectApplyService inspectApplyService = new InspectApplyServiceImpl();
 
     void get_all(HttpServletRequest request, HttpServletResponse response){
         List<Inspectitem> list = inspectService.getAll();
@@ -28,9 +31,9 @@ public class InspectServlet extends BaseServlet{
         List<InspectApply> list = new ArrayList();
         for(int i = 0;i < applies.size(); i++){
             InspectApply apply = applies.getObject(i, InspectApply.class);
+            list.add(apply);
         }
-
-        //todo:service
-        this.writeSuccessJSON(response,"添加成功！");
+        int result = inspectApplyService.addManyApply(list);
+        this.writeSuccessJSON(response,result);
     }
 }
