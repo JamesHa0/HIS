@@ -18,4 +18,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
     public List<Medicalrecord> getByRegistId(int RegistId) {
         return MedicalRecordDao.getByRegistId(RegistId);
     }
+
+    @Override
+    public int updateByCasenumber(Medicalrecord medicalrecord) {
+        return MedicalRecordDao.updateByCasenumber(medicalrecord);
+    }
 }

@@ -22,6 +22,13 @@ const MenzhenAPI = {
       params:data
     })
   },
+  update_by_casenumber(data:any){
+    return request({
+      url:"/record/update_by_casenumber",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default MenzhenAPI;

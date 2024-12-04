@@ -34,4 +34,28 @@ public class MedicalRecordDaoImpl extends BaseDao implements MedicalRecordDao{
         List<Medicalrecord> list = this.executeQuery(sql.toString(),Medicalrecord.class,RegistId);
         return list;
     }
+
+    @Override
+    public int updateByCasenumber(Medicalrecord medicalrecord) {
+        StringBuffer sql = new StringBuffer("update MedicalRecord set " +
+                "RegistID=?,Readme=?,Present=?,PresentTreat=?,History=?,Allergy=?, Physique=?,Proposal=?,Careful=?,CheckResult=?,Diagnosis=?,Handling=?,CaseState=? " +
+                "where CaseNumber=?");
+        int count = this.saveOrUpdate(sql.toString(),
+                medicalrecord.getRegistid(),
+                medicalrecord.getReadme(),
+                medicalrecord.getPresent(),
+                medicalrecord.getPresenttreat(),
+                medicalrecord.getHistory(),
+                medicalrecord.getAllergy(),
+                medicalrecord.getPhysique(),
+                medicalrecord.getProposal(),
+                medicalrecord.getCareful(),
+                medicalrecord.getCheckresult(),
+                medicalrecord.getDiagnosis(),
+                medicalrecord.getHandling(),
+                medicalrecord.getCasestate(),
+                medicalrecord.getCasenumber()
+        );
+        return count;
+    }
 }

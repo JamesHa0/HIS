@@ -105,7 +105,6 @@ function save(){
       }
     )
   }
-  refresh()
 }
 
 
@@ -117,9 +116,12 @@ function update() {
     ElMessage.error('请先选择患者！');
     return;
   } else{
-    //todo:更新病例
+    MenzhenAPI.update_by_casenumber(params.value).then(
+      (data) => {
+        console.log(data);
+      }
+    )
   }
-  refresh()
 }
 
 const onRegisterChange = (value:any) => {
@@ -157,8 +159,6 @@ function clearForm(){
   recordform.value.diagnosis = ''
   recordform.value.proposal = ''
   recordform.value.careful = ''
-  savedbuttonable.value = false
-  updatedbuttonable.value = false
 }
 
 
@@ -167,7 +167,7 @@ defineExpose({
 })
 
 function refresh(){
-  formKey.value = Date.now();
+  onRegisterChange(oneregist);
 }
 
 </script>

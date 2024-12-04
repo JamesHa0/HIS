@@ -8,4 +8,6 @@ public interface MedicalRecordService {
     int addOne(Medicalrecord medicalrecord);
 
     List<Medicalrecord> getByRegistId(int RegistId);
+
+    int updateByCasenumber (Medicalrecord medicalrecord);
 }
