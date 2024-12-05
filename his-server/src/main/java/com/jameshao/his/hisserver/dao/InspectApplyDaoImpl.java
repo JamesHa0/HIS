@@ -63,4 +63,15 @@ public class InspectApplyDaoImpl extends BaseDao implements InspectApplyDao{
         System.out.println(sql.toString());
         return this.executeQuery(sql.toString(), InspectApply.class);
     }
+
+    @Override
+    public int delMany(List<Integer> list) {
+        int result = 0;
+        StringBuffer sql = new StringBuffer("update inspect_apply set status = 0 where itemid = ?");
+        for(Integer itemid : list){
+            this.saveOrUpdate(sql.toString(),itemid);
+            result ++;
+        }
+        return result;
+    }
 }

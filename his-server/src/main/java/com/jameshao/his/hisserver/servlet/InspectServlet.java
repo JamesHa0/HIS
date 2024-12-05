@@ -48,4 +48,15 @@ public class InspectServlet extends BaseServlet{
         int result = inspectApplyService.addManyApply(list);
         this.writeSuccessJSON(response,result);
     }
+    void delete_many_apply(HttpServletRequest request, HttpServletResponse response){
+        String param = request.getParameter("data");
+        JSONArray applies = JSONArray.parseArray(param);
+        // 将数据存入list
+        List<Integer> itemIdList = new ArrayList<>();
+        for (int i = 0; i < applies.size(); i++) {
+            itemIdList.add((Integer) applies.get(i));
+        }
+        int result = inspectApplyService.delManyApply(itemIdList);
+        this.writeSuccessJSON(response, result);
+    }
 }

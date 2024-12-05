@@ -8,7 +8,7 @@
         <el-button type="primary" @click="showinspcetitem" text><el-icon><CircleCheckFilled /></el-icon>新增</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="" text><el-icon><CircleCloseFilled /></el-icon>删除</el-button>
+        <el-button type="primary" @click="handleDelete" text><el-icon><CircleCloseFilled /></el-icon>删除</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
         <el-button type="primary" @click="refresh" text><el-icon><Refresh /></el-icon>刷新</el-button>
@@ -21,11 +21,22 @@
               :key="tableKey"
               :summary-method="getSumPrice"
               show-summary
+              @selection-change="handleSelectionChange"
+              ref="refTable"
     >
+      <el-table-column type="selection" :selectable="selectable" width="30" />
       <el-table-column prop="name" label="项目名称" width="180" />
-      <el-table-column prop="price" label="项目价格" width="180" />
-      <el-table-column prop="result" label="检查结果" width="180" />
-      <el-table-column prop="status" label="状态" width="180" />
+      <el-table-column prop="price" label="项目价格" width="150" />
+      <el-table-column prop="result" label="检查结果" width="240" />
+      <el-table-column prop="status" label="状态" width="100" >
+        <template #default="scope">
+          <el-tag v-if="scope.row.status == 1" type="danger">待缴费</el-tag>
+          <el-tag v-else-if="scope.row.status == 2" type="warning">已缴费</el-tag>
+          <el-tag v-else-if="scope.row.status == 3" type="success">已检查</el-tag>
+          <el-tag v-else-if="scope.row.status == 4" type="primary">已退费</el-tag>
+          <el-tag v-else-if="scope.row.status == 0" type="info">已撤销</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
 
 
@@ -70,10 +81,17 @@ let inspectitemlist = ref([]);
 
 let currentSelectedRow = ref({});
 
-// 检查项选中多行
+// 检查项列表选中多行
+let selectedRows = ref([]);
+
+// 检查项列表的选中状态
+let refTable = ref();
+
+
+// 新增检查项选中多行
 let selectedItemRows = ref([]);
 
-// 检查项的选中状态
+// 新增检查项的选中状态
 let refItemTable = ref();
 
 
@@ -102,21 +120,72 @@ defineExpose({
 
 // 计算检查项的合计金额
 const getSumPrice = () =>{
+  let totalToPay = 0;
   let total = 0;
   inspectlist.value.forEach(row => {
-    total += row.price;
+    if(row.status != 0){
+      if(row.status == 1){
+        totalToPay += row.price;
+      }
+      total += row.price;
+    }
   });
-  return ["检查项目合计：", total, null, null];
+  return [null, "检查项目合计：", total, "待缴费金额：", totalToPay];
 }
 
-// 检查项复选框选中事件
-const onSelectedItems = (selection: any) =>{
-  selectedItemRows = selection;
-  console.log(selectedItemRows);
+// 锁定已检查的项目，防止被删除
+const selectable = (row: inspectlist.value) => {
+  return row.status == 1
 }
 
+// 检查项列表选中事件
+const handleSelectionChange = (row: any) => {
+  selectedRows = row;
+  console.log(selectedRows);
+}
 
+// 删除按钮
+function handleDelete() {
+  let params = [];
+  // 判断是否选中患者
+  console.log("选中的患者",currentSelectedRow)
+  if(currentSelectedRow === undefined || currentSelectedRow == null || !currentSelectedRow.id){
+    alert("请先选择患者");
+    return;
+  } else {
+    for (let i = 0; i < selectedRows.length; i++) {
+      let row = selectedRows[i];
+      params.push(row.itemid);
+    }
+  }
+  if (params.length === 0) {
+    ElMessage.warning("请勾选删除项");
+    return;
+  }
+  ElMessageBox.confirm("确认删除?", "警告", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(function () {
+    let strParams = JSON.stringify(params);
+    let toServletParams = {
+      data: strParams
+    }
+    console.log("1111--->",toServletParams)
+    InspectAPI.delete_many_apply(toServletParams).then(
+      (data:any) => {
+        console.log(data)
+        refreshCurrentSelRegister(currentSelectedRow);
+      })
+  })
+}
 
+// 刷新按钮
+function refresh(){
+  refreshCurrentSelRegister(currentSelectedRow);
+}
+
+// 打开新增检查项对话框
 function showinspcetitem() {
   InspectAPI.get_all_inspect().then(
     (data) => {
@@ -126,9 +195,16 @@ function showinspcetitem() {
     })
 }
 
+// 新增检查项对话框选中事件
+const onSelectedItems = (selection: any) =>{
+  selectedItemRows = selection;
+  console.log(selectedItemRows);
+}
+
+// 新增检查项
 function addtoRegist(){
   // 判断是否选中患者
-  console.log("选中的id：",currentSelectedRow.id)
+  console.log("选中的患者：",currentSelectedRow)
   if(currentSelectedRow === undefined || currentSelectedRow == null || !currentSelectedRow.id){
     alert("请先选择患者");
     return;
@@ -163,8 +239,6 @@ function addtoRegist(){
       alert("检查项已添加！");
     }
   }
-
-
 }
 
 // 取消按钮
@@ -173,12 +247,7 @@ function onCancel(){
   inspectVisible.value = false;
 }
 
-// 刷新按钮
-function refresh(){
-  refreshCurrentSelRegister(currentSelectedRow);
-}
-
-// 清空选中多行检查项
+// 清空新增检查项对话框的多行选中
 function clearItemSels(){
   inspectitemlist.value.forEach(row => {
     refItemTable.value.toggleRowSelection(row, false);

@@ -9,4 +9,6 @@ public interface InspectApplyService {
     int addManyApply(List<InspectApply> list);
 
     List<InspectApply> getByRegistId (Integer registId);
+
+    int delManyApply(List<Integer> list);
 }

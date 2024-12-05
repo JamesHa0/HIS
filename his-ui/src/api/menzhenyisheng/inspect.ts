@@ -20,6 +20,13 @@ const InspectAPI = {
       method:"get",
       params:data
     })
+  },
+  delete_many_apply(data:any){
+    return request({
+      url:"/inspect/delete_many_apply",
+      method:"get",
+      params:data
+    })
   }
 }
 

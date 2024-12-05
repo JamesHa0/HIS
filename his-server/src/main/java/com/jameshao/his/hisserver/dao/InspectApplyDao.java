@@ -8,4 +8,6 @@ public interface InspectApplyDao {
     int insertMany(List<InspectApply> list);
 
     List<InspectApply> queryByCondition(InspectApply apply);
+
+    int delMany(List<Integer> list);
 }

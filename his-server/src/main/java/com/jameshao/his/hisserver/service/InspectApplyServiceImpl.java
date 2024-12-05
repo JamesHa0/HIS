@@ -19,4 +19,9 @@ public class InspectApplyServiceImpl implements InspectApplyService{
         apply.setRegistid(registId);
         return dao.queryByCondition(apply);
     }
+
+    @Override
+    public int delManyApply(List<Integer> list) {
+        return dao.delMany(list);
+    }
 }
