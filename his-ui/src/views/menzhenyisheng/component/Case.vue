@@ -88,16 +88,26 @@ let updatedbuttonable = ref(false)
 let oneregist = reactive({})
 
 
-function save(){
+// 操作前检查是否选中
+function checkSelected(){
   let params = recordform;
   params.value.casenumber = oneregist.casenumber;
   params.value.registid= oneregist.id;
 
-  console.log(params.value.casenumber);
+  console.log("操作的患者病历号：",params.value.casenumber);
 
   if(params.value.casenumber === undefined || params.value.casenumber === null || params.value.casenumber === ''){
     ElMessage.error('请先选择患者！');
-    return;
+    return null;
+  } else {
+    return params;
+  }
+}
+
+function save(){
+  let params = checkSelected();
+  if (params === null){
+     ElMessage.error('请先选择患者！');
   } else{
     MenzhenAPI.add_record(params.value).then(
       (data) => {
@@ -109,12 +119,9 @@ function save(){
 
 
 function update() {
-  let params = recordform
-  params.value.casenumber = oneregist.casenumber
-
-  if(params.value.casenumber === undefined || params.value.casenumber === null || params.value.casenumber === ''){
+  let params = checkSelected();
+  if (params === null){
     ElMessage.error('请先选择患者！');
-    return;
   } else{
     MenzhenAPI.update_by_casenumber(params.value).then(
       (data) => {
