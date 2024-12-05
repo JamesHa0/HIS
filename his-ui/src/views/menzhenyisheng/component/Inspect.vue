@@ -18,7 +18,10 @@
 
     <el-table :data="inspectlist"
               style="width: 100%"
-              :key="tableKey">
+              :key="tableKey"
+              :summary-method="getSumPrice"
+              show-summary
+    >
       <el-table-column prop="name" label="项目名称" width="180" />
       <el-table-column prop="price" label="项目价格" width="180" />
       <el-table-column prop="result" label="检查结果" width="180" />
@@ -97,6 +100,14 @@ defineExpose({
   refreshCurrentSelRegister
 })
 
+// 计算检查项的合计金额
+const getSumPrice = () =>{
+  let total = 0;
+  inspectlist.value.forEach(row => {
+    total += row.price;
+  });
+  return ["检查项目合计：", total, null, null];
+}
 
 // 检查项复选框选中事件
 const onSelectedItems = (selection: any) =>{
