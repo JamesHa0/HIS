@@ -25,4 +25,42 @@ public class InspectApplyDaoImpl extends BaseDao implements InspectApplyDao{
         }
         return result;
     }
+
+    @Override
+    public List<InspectApply> queryByCondition(InspectApply apply) {
+        StringBuffer sql = new StringBuffer("select * from inspect_apply where 1=1 ");
+
+        Integer inspectid = apply.getInspectid();
+        if(inspectid != null){
+            sql.append(" and inspectid= ").append(inspectid);
+        }
+
+        String name = apply.getName();
+        if(name != null && (!name.isEmpty())){
+            sql.append(" and name like '%").append(name).append("%'");
+        }
+
+        Integer registid = apply.getRegistid();
+        if(registid != null){
+            sql.append(" and registid= ").append(registid);
+        }
+
+        if(apply.getPrice() != null){
+            Float price = apply.getPrice().floatValue();
+            sql.append(" and price= ").append(price);
+        }
+
+        String status = apply.getStatus();
+        if(status != null && (!status.isEmpty())){
+            sql.append(" and status like '%").append(status).append("%'");
+        }
+
+        String result = apply.getResult();
+        if(result != null && (!result.isEmpty())){
+            sql.append(" and result like '%").append(result).append("%'");
+        }
+
+        System.out.println(sql.toString());
+        return this.executeQuery(sql.toString(), InspectApply.class);
+    }
 }

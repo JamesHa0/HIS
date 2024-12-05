@@ -23,6 +23,18 @@ public class InspectServlet extends BaseServlet{
         List<Inspectitem> list = inspectService.getAll();
         this.writeSuccessJSON(response,list);
     }
+
+    void get_by_registid(HttpServletRequest request, HttpServletResponse response){
+        String sid = request.getParameter("regist_id");
+        Integer registId =null;
+        if(sid!=null && sid.trim().length() >0){
+            registId = Integer.parseInt(sid);
+            List<InspectApply> list = inspectApplyService.getByRegistId(registId);
+            this.writeSuccessJSON(response,list);
+        }else {
+            this.writeErrorJSON(response,"未获得患者检查申请！");
+        }
+    }
     void add_many_apply(HttpServletRequest request, HttpServletResponse response){
         String param = request.getParameter("data");
         System.out.println(param);

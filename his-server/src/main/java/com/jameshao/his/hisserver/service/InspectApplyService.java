@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface InspectApplyService {
     int addManyApply(List<InspectApply> list);
+
+    List<InspectApply> getByRegistId (Integer registId);
 }

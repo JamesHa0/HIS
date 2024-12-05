@@ -11,7 +11,7 @@
         <el-button type="primary" @click="" text><el-icon><CircleCloseFilled /></el-icon>删除</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="" text><el-icon><Refresh /></el-icon>刷新</el-button>
+        <el-button type="primary" @click="refresh" text><el-icon><Refresh /></el-icon>刷新</el-button>
       </el-col>
     </el-row>
 
@@ -79,6 +79,19 @@ let refItemTable = ref();
 const refreshCurrentSelRegister = (info:any) =>{
   currentSelectedRow = info;
   console.log("当前选中患者信息：",currentSelectedRow)
+
+  let param = {
+    regist_id:currentSelectedRow.id
+  }
+
+  if(currentSelectedRow.id){
+    InspectAPI.get_by_registid(param).then(
+      (data) => {
+        console.log(data);
+        inspectlist.value = data;
+      }
+    )
+  }
 }
 defineExpose({
   refreshCurrentSelRegister
@@ -147,6 +160,11 @@ function addtoRegist(){
 function onCancel(){
   clearItemSels;
   inspectVisible.value = false;
+}
+
+// 刷新按钮
+function refresh(){
+  refreshCurrentSelRegister(currentSelectedRow);
 }
 
 // 清空选中多行检查项

@@ -13,6 +13,13 @@ const InspectAPI = {
       method:"get",
       params:data
     })
+  },
+  get_by_registid(data:any){
+    return request({
+      url:"/inspect/get_by_registid",
+      method:"get",
+      params:data
+    })
   }
 }
 

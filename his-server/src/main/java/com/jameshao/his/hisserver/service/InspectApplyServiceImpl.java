@@ -12,4 +12,11 @@ public class InspectApplyServiceImpl implements InspectApplyService{
     public int addManyApply(List<InspectApply> list) {
         return dao.insertMany(list);
     }
+
+    @Override
+    public List<InspectApply> getByRegistId(Integer registId) {
+        InspectApply apply = new InspectApply();
+        apply.setRegistid(registId);
+        return dao.queryByCondition(apply);
+    }
 }
