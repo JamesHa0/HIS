@@ -18,7 +18,7 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
                 register.getIdnumber(),
                 register.getAge(),
                 new Date(),
-                "晚上",
+                "上午或下午？？？还在测试中",
                 2,
                 11,
                 1,
@@ -52,9 +52,9 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
         }
         sql.append(" and ");
         if("visit".equals(state)){
-            sql.append("VisitState = 1");
-        }else if("unvisit".equals(state)){
             sql.append("VisitState > 1");
+        }else if("unvisit".equals(state)){
+            sql.append("VisitState = 1");
         }
         System.out.println(sql.toString());
         return this.executeQuery(sql.toString(),Register.class);

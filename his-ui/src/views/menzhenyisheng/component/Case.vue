@@ -42,10 +42,18 @@
         <el-input v-model="recordform.physique" type="textarea" />
       </el-form-item>
 
-      <lebel class="label1">评估/诊断：</lebel>
-
       <el-form-item label="检查建议" :label-width="100">
         <el-input v-model="recordform.proposal" type="textarea" />
+      </el-form-item>
+
+      <el-form-item label="检查结果" :label-width="100">
+        <el-input v-model="recordform.checkresult" type="textarea" />
+      </el-form-item>
+
+      <lebel class="label1">评估/诊断：</lebel>
+
+      <el-form-item label="诊断结果" :label-width="100">
+        <el-input v-model="recordform.diagnosis" type="textarea" />
       </el-form-item>
 
       <el-form-item label="注意事项" :label-width="100">
