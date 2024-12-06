@@ -15,8 +15,8 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public List<Register> getAll() {
-        return dao.queryAll();
+    public Object[] getAll(int page, int size) {
+        return dao.queryAll(page, size);
     }
 
     @Override

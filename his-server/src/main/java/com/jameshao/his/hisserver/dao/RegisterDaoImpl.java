@@ -4,6 +4,7 @@ import com.jameshao.his.hisserver.vo.Register;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     public int insertOne(Register register) {
@@ -30,8 +31,18 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     }
 
     @Override
-    public List<Register> queryAll() {
-        return this.executeQuery("select * from register",Register.class);
+    public Object[] queryAll(int page, int size) {
+        int total = 0;
+        // 计算偏移量，用于分页查询
+        int offset = (page - 1) * size;
+        String countSql = "SELECT COUNT(*) FROM register";
+        String dataSql = "SELECT * FROM register LIMIT ?,?";
+        List<Map<String, Object>> list = this.executeQuery(countSql);
+        total = Integer.parseInt(list.get(0).get("COUNT(*)").toString());
+        return new Object[]{
+                total,
+                this.executeQuery(dataSql,Register.class,offset,size)
+        };
     }
 
     @Override

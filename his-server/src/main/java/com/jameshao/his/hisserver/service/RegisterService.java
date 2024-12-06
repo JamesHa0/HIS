@@ -9,7 +9,7 @@ public interface RegisterService {
 
     int add(Register register);
 
-    List<Register> getAll();
+    Object[] getAll(int page, int size);
 
     List<Register> search(String search_name);
 

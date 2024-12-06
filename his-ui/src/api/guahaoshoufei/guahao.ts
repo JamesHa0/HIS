@@ -1,10 +1,11 @@
 import request from "@/utils/request";
 
 const GuahaoAPI = {
-  getall(){
+  getall(data:any){
     return request({
       url:"/register/getAll",
       method:"get",
+      params:data
     })
   },
   add_register(data:any){

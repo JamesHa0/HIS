@@ -7,7 +7,7 @@ import java.util.List;
 public interface RegisterDao {
     int insertOne(Register register);
 
-    List<Register> queryAll();
+    Object[] queryAll(int page, int size);
 
     List<Register> queryOneByName(String name);
 

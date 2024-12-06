@@ -24,14 +24,14 @@
 
   <el-card>
     <el-table :data="list" border style="width: 100%" :key="tableKey">
-      <el-table-column prop="casenumber" label="病历号" width="150" />
-      <el-table-column prop="realname" label="姓名" width="180" />
-      <el-table-column prop="gender" label="性别" width="180" />
-      <el-table-column prop="idnumber" label="身份证号" width="180" />
+      <el-table-column prop="casenumber" label="病历号" min-width="25%" />
+      <el-table-column prop="realname" label="姓名" min-width="20%" />
+      <el-table-column prop="gender" label="性别" min-width="10%" />
+      <el-table-column prop="idnumber" label="身份证号" min-width="25%" />
 <!--      <el-table-column prop="" label="出生日期" v-model="CaseNumber" width="180" />-->
-      <el-table-column prop="age" label="年龄" width="180" />
+      <el-table-column prop="age" label="年龄" min-width="10%" />
 
-      <el-table-column fixed="right" label="操作" min-width="120">
+      <el-table-column fixed="right" label="操作" min-width="10%">
         <template #default="scope">
           <el-button link type="primary" size="small" @click="">
             编辑
@@ -41,6 +41,13 @@
 
       </el-table-column>
     </el-table>
+    <el-pagination
+      v-model:current-page="currentPage"
+      :page-size="pageSize"
+      :total="total"
+      layout="total, prev, pager, next, jumper"
+      @current-change="handleCurrentChange"
+    />
   </el-card>
 
 
@@ -118,6 +125,19 @@ let genders = ref([
 //挂号列表
 let list = ref([]);
 
+// 当前页码，初始化为1
+let currentPage = ref(1);
+// 每页显示的记录数量，可根据实际需求调整，这里假设每页显示10条记录
+let pageSize = ref(10);
+// 总记录数，初始为0，后续会从后端获取并更新
+let total = ref(0);
+
+// 页码改变时的处理方法
+const handleCurrentChange = (newPage: number) => {
+  currentPage.value = newPage;
+  get_list();
+};
+
 //模糊搜索
 function search (search_name: string){
   console.log(search_name)
@@ -156,15 +176,22 @@ function get_gender(){
     )
 }
 
-//获取列表
-function get_list(){
-  GuahaoAPI.getall()
+// 获取列表
+function get_list() {
+  console.log("currentPage.value:",currentPage.value);
+  console.log("pageSize.value:",pageSize.value)
+  let params = {
+    page: currentPage.value,
+    size: pageSize.value
+  }
+  GuahaoAPI.getall(params)
     .then(
-      (data:any)=>{
-        list.value = data;
+      (data: any) => {
+        list.value = data.list;
+        total.value = data.total;
         tableKey.value = Date.now();
       }
-    )
+    );
 }
 
 onMounted(()=>{

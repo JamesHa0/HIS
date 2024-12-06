@@ -26,14 +26,14 @@
               class="form1"
     >
       <el-table-column type="selection" :selectable="selectable" width="30" />
-      <el-table-column prop="name" label="项目名称" width="180" />
-      <el-table-column prop="price" label="项目价格" width="150" />
-      <el-table-column prop="result" label="检查结果" width="280" >
+      <el-table-column prop="name" label="项目名称" min-width="25%" />
+      <el-table-column prop="price" label="项目价格" min-width="15%" />
+      <el-table-column prop="result" label="检查结果" min-width="40%" >
         <template #default="scope">
           <el-input type="textarea" @input="changeResultable = true" @blur="saveResult(scope.row)" v-model="scope.row.result" :autosize="{ minRows: 2, maxRows: 5 }"/>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="100" >
+      <el-table-column prop="status" label="状态" min-width="20%" >
         <template #default="scope">
           <el-tag v-if="scope.row.status == 1" type="danger">待缴费</el-tag>
           <el-tag v-else-if="scope.row.status == 2" type="warning">已缴费</el-tag>
@@ -77,7 +77,6 @@
 import {CircleCheckFilled, CircleCloseFilled, Refresh, Tickets} from "@element-plus/icons-vue";
 import {ref} from "vue";
 import InspectAPI from "@/api/menzhenyisheng/inspect";
-import MenzhenAPI from "@/api/menzhenyisheng/menzhen";
 
 let inspectlist = ref([]);
 let tableKey = ref(0);

@@ -8,7 +8,9 @@ import com.jameshao.his.hisserver.utils.ParamUtils;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/register/*")
 public class RegisterServlet extends BaseServlet{
@@ -22,8 +24,25 @@ public class RegisterServlet extends BaseServlet{
     }
 
     public void getAll(HttpServletRequest request, HttpServletResponse response){
-        List<Register> list = registerService.getAll();
-        this.writeSuccessJSON(response,list);
+        String pageStr = request.getParameter("page");
+        String sizeStr = request.getParameter("size");
+        int page = 1;
+        int size = 10; // 设置默认每页数量为10
+        if (pageStr!= null &&!pageStr.isEmpty()) {
+            page = Integer.parseInt(pageStr);
+        }
+        if (sizeStr!= null &&!sizeStr.isEmpty()) {
+            size = Integer.parseInt(sizeStr);
+        }
+        System.out.println("page:"+page);
+        System.out.println("size:"+size);
+        Object[] result = registerService.getAll(page, size);
+        int total = (int) result[0];
+        List<Register> list = (List<Register>) result[1];
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("total", total);
+        responseData.put("list", list);
+        this.writeSuccessJSON(response, responseData);
     }
 
     public void search(HttpServletRequest request, HttpServletResponse response){
