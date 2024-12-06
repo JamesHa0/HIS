@@ -27,6 +27,13 @@ const InspectAPI = {
       method:"get",
       params:data
     })
+  },
+  update_result(data:any){
+    return request({
+      url:"/inspect/update_result",
+      method:"get",
+      params:data
+    })
   }
 }
 

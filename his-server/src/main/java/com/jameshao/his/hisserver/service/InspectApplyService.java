@@ -11,4 +11,6 @@ public interface InspectApplyService {
     List<InspectApply> getByRegistId (Integer registId);
 
     int delManyApply(List<Integer> list);
+
+    int updateResult(int id,String result);
 }

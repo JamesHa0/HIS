@@ -59,4 +59,19 @@ public class InspectServlet extends BaseServlet{
         int result = inspectApplyService.delManyApply(itemIdList);
         this.writeSuccessJSON(response, result);
     }
+
+    void update_result(HttpServletRequest request, HttpServletResponse response){
+        String result = request.getParameter("result");
+        String id = request.getParameter("itemid");
+        Integer iid = 0;
+        if(id!=null && id.trim().length() >0){
+            iid = Integer.parseInt(id);
+        }
+        int res = inspectApplyService.updateResult(iid,result);
+        if (res == 1){
+            this.writeSuccessJSON(response,"检查结果更新成功！");
+        }else {
+            this.writeErrorJSON(response,"检查结果更新失败！");
+        }
+    }
 }

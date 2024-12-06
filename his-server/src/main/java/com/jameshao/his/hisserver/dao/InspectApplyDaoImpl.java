@@ -52,7 +52,7 @@ public class InspectApplyDaoImpl extends BaseDao implements InspectApplyDao{
 
         String status = apply.getStatus();
         if(status != null && (!status.isEmpty())){
-            sql.append(" and status like '%").append(status).append("%'");
+            sql.append(" and status = '").append(status).append("'");
         }
 
         String result = apply.getResult();
@@ -73,5 +73,11 @@ public class InspectApplyDaoImpl extends BaseDao implements InspectApplyDao{
             result ++;
         }
         return result;
+    }
+
+    @Override
+    public int updateResult(int id, String result) {
+        StringBuffer sql = new StringBuffer("update inspect_apply set result = ? where itemid = ?");
+        return this.saveOrUpdate(sql.toString(),result,id);
     }
 }

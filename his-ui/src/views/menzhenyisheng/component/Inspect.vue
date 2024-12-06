@@ -23,11 +23,16 @@
               show-summary
               @selection-change="handleSelectionChange"
               ref="refTable"
+              class="form1"
     >
       <el-table-column type="selection" :selectable="selectable" width="30" />
       <el-table-column prop="name" label="项目名称" width="180" />
       <el-table-column prop="price" label="项目价格" width="150" />
-      <el-table-column prop="result" label="检查结果" width="240" />
+      <el-table-column prop="result" label="检查结果" width="280" >
+        <template #default="scope">
+          <el-input type="textarea" @input="changeResultable = true" @blur="saveResult(scope.row)" v-model="scope.row.result" :autosize="{ minRows: 2, maxRows: 5 }"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态" width="100" >
         <template #default="scope">
           <el-tag v-if="scope.row.status == 1" type="danger">待缴费</el-tag>
@@ -88,6 +93,9 @@ let selectedRows = ref([]);
 // 检查项列表的选中状态
 let refTable = ref();
 
+// 检查项结果是否被修改
+let changeResultable = ref(false);
+
 // 新增检查项按钮状态
 let addbuttonable = ref(false);
 
@@ -103,6 +111,7 @@ let refItemTable = ref();
 const refreshCurrentSelRegister = (info:any) =>{
   currentSelectedRow = info;
   console.log("当前选中患者信息：",currentSelectedRow)
+  console.log("当前选中患者状态：",currentSelectedRow.visitstate)
 
   let param = {
     regist_id:currentSelectedRow.id
@@ -110,6 +119,8 @@ const refreshCurrentSelRegister = (info:any) =>{
 
   if(currentSelectedRow.visitstate > 1){
     addbuttonable.value = true;
+  }else {
+    addbuttonable.value = false;
   }
 
   if(currentSelectedRow.id){
@@ -138,6 +149,23 @@ const getSumPrice = () =>{
     }
   });
   return [null, "检查项目合计：", total, "待缴费金额：", totalToPay];
+}
+
+// 保存检查结果
+function saveResult(row){
+  // 只有在检查结果被修改的情况下才发送请求
+  if(changeResultable.value) {
+    let params = {
+      itemid: row.itemid,
+      result: row.result
+    }
+    console.log("params:", params)
+    InspectAPI.update_result(params).then(
+      (data) => {
+        alert(data);
+        changeResultable.value = false;
+      })
+  }
 }
 
 // 锁定已检查的项目，防止被删除
@@ -178,7 +206,6 @@ function handleDelete() {
     let toServletParams = {
       data: strParams
     }
-    console.log("1111--->",toServletParams)
     InspectAPI.delete_many_apply(toServletParams).then(
       (data:any) => {
         console.log(data)

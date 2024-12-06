@@ -114,10 +114,15 @@ function handleEdit(row:any){
 
 
 function handleDelete(row:any){
-  ConstanttypeAPI.delete(row)
-    .then(
-      (data:any) => {
-        //刷新页面
+  ElMessageBox.confirm("确认删除?", "警告", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(function (){
+    ConstanttypeAPI.delete(row)
+      .then(
+        (data:any) => {
+          //刷新页面
           ConstanttypeAPI.getAll()
             .then(
               (data:any) => {
@@ -125,8 +130,9 @@ function handleDelete(row:any){
                 tableKey.value = Date.now();
               }
             )
-      }
-    )
+        }
+      )
+  })
 }
 
 function handleEditFormClosed(){

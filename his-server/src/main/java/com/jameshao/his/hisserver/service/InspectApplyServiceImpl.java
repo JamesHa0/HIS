@@ -24,4 +24,9 @@ public class InspectApplyServiceImpl implements InspectApplyService{
     public int delManyApply(List<Integer> list) {
         return dao.delMany(list);
     }
+
+    @Override
+    public int updateResult(int id, String result) {
+        return dao.updateResult(id,result);
+    }
 }

@@ -10,4 +10,6 @@ public interface InspectApplyDao {
     List<InspectApply> queryByCondition(InspectApply apply);
 
     int delMany(List<Integer> list);
+
+    int updateResult(int id,String result);
 }
