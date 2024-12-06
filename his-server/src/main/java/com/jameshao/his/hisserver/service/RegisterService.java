@@ -15,4 +15,6 @@ public interface RegisterService {
 
     List<Register> getByBelong(int id,String belong,String state);
 
+    int changeState(int id,int state);
+
 }

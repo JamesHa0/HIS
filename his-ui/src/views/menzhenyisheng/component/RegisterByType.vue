@@ -7,7 +7,7 @@
   >
     <el-table-column prop="casenumber" label="病历号" width="125" />
     <el-table-column prop="realname" label="姓名" width="125" />
-    <el-table-column prop="age" label="年龄" width="125" />
+    <el-table-column prop="age" label="年龄" width="80" />
   </el-table>
 
 </template>

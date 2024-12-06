@@ -2,10 +2,10 @@
   <div>
     <el-row justify="center">
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="" text><el-icon><Tickets /></el-icon>修改</el-button>
+        <el-button type="primary" @click="" :disabled="true" text><el-icon><Tickets /></el-icon>修改</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="showinspcetitem" text><el-icon><CircleCheckFilled /></el-icon>新增</el-button>
+        <el-button type="primary" @click="showinspcetitem" :disabled="!addbuttonable" text><el-icon><CircleCheckFilled /></el-icon>新增</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
         <el-button type="primary" @click="handleDelete" text><el-icon><CircleCloseFilled /></el-icon>删除</el-button>
@@ -72,6 +72,7 @@
 import {CircleCheckFilled, CircleCloseFilled, Refresh, Tickets} from "@element-plus/icons-vue";
 import {ref} from "vue";
 import InspectAPI from "@/api/menzhenyisheng/inspect";
+import MenzhenAPI from "@/api/menzhenyisheng/menzhen";
 
 let inspectlist = ref([]);
 let tableKey = ref(0);
@@ -87,6 +88,8 @@ let selectedRows = ref([]);
 // 检查项列表的选中状态
 let refTable = ref();
 
+// 新增检查项按钮状态
+let addbuttonable = ref(false);
 
 // 新增检查项选中多行
 let selectedItemRows = ref([]);
@@ -103,6 +106,10 @@ const refreshCurrentSelRegister = (info:any) =>{
 
   let param = {
     regist_id:currentSelectedRow.id
+  }
+
+  if(currentSelectedRow.visitstate > 1){
+    addbuttonable.value = true;
   }
 
   if(currentSelectedRow.id){

@@ -59,4 +59,10 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
         System.out.println(sql.toString());
         return this.executeQuery(sql.toString(),Register.class);
     }
+
+    @Override
+    public int updateVisitStateById(int id, int state) {
+        String sql = "update register set VisitState = ? where ID = ?";
+        return this.saveOrUpdate(sql,state,id);
+    }
 }

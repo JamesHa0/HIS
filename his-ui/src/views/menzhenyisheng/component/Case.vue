@@ -2,10 +2,10 @@
   <div>
     <el-row justify="center">
       <el-col :span="6" style="background-color: #EAF1F5">
-        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
+        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改诊断</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5" >
-        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>保存</el-button>
+        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>提交诊断</el-button>
       </el-col>
       <el-col :span="6" style="background-color: #EAF1F5">
         <el-button type="primary" @click="clearForm" text><el-icon><CircleCloseFilled /></el-icon>清空所有</el-button>
@@ -61,8 +61,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改</el-button>
-        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>保存</el-button>
+        <el-button type="primary" @click="update" :disabled="!updatedbuttonable" text><el-icon><Tickets /></el-icon>修改诊断</el-button>
+        <el-button type="primary" @click="save" :disabled="!savedbuttonable" text><el-icon><CircleCheckFilled /></el-icon>提交诊断</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -112,12 +112,18 @@ function checkSelected(){
   }
 }
 
+
 function save(){
   let params = checkSelected();
   if (params === null){
      ElMessage.error('请先选择患者！');
   } else{
     MenzhenAPI.add_record(params.value).then(
+      (data) => {
+        console.log(data);
+      })
+    // 修改患者状态信息为：未缴费
+    MenzhenAPI.change_state({regist_id:params.value.registid,state:"未缴费"}).then(
       (data) => {
         console.log(data);
       }
@@ -150,12 +156,15 @@ const onRegisterChange = (value:any) => {
     (data)=>{
       if(data != null && data != undefined){
         recordform.value = data
-        savedbuttonable.value = false
-        updatedbuttonable.value = true
       } else{
         clearForm()
+      }
+      if(value.visitstate == 1){
         savedbuttonable.value = true
         updatedbuttonable.value = false
+      } else{
+        savedbuttonable.value = false
+        updatedbuttonable.value = true
       }
     }
   )

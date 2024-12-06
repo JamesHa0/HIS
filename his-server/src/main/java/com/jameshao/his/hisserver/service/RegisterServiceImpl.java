@@ -29,4 +29,9 @@ public class RegisterServiceImpl implements RegisterService {
         return dao.queryByBelong(id, belong, state);
     }
 
+    @Override
+    public int changeState(int id, int state) {
+        return dao.updateVisitStateById(id, state);
+    }
+
 }
