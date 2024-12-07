@@ -80,4 +80,10 @@ public class InspectApplyDaoImpl extends BaseDao implements InspectApplyDao{
         StringBuffer sql = new StringBuffer("update inspect_apply set result = ? where itemid = ?");
         return this.saveOrUpdate(sql.toString(),result,id);
     }
+
+    @Override
+    public int updateStatusById(int id) {
+        StringBuffer sql = new StringBuffer("update inspect_apply set status = 2 where registid = ? and status = 1");
+        return this.saveOrUpdate(sql.toString(),id);
+    }
 }

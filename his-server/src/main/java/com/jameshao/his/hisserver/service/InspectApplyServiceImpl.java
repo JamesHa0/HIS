@@ -29,4 +29,9 @@ public class InspectApplyServiceImpl implements InspectApplyService{
     public int updateResult(int id, String result) {
         return dao.updateResult(id,result);
     }
+
+    @Override
+    public int updateStatusById(int id) {
+        return dao.updateStatusById(id);
+    }
 }

@@ -12,4 +12,6 @@ public interface InspectApplyDao {
     int delMany(List<Integer> list);
 
     int updateResult(int id,String result);
+
+    int updateStatusById(int id);
 }

@@ -13,4 +13,6 @@ public interface InspectApplyService {
     int delManyApply(List<Integer> list);
 
     int updateResult(int id,String result);
+
+    int updateStatusById(int id);
 }

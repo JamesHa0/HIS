@@ -7,7 +7,7 @@
         <!--        左侧部分-->
         <el-col :span="8">
           <el-row justify="space-between">
-            <label class="label1">患者选择</label><el-button type="primary" :icon="Refresh" @click="refresh()"></el-button>
+            <label class="label1">患者选择</label><el-button type="primary" :icon="Refresh" @click="refresh_register()"></el-button>
           </el-row>
 
           <el-input
@@ -69,23 +69,38 @@
             <el-table-column>
             </el-table-column>
           </el-table>
+          <el-button type="primary" @click="payNow" :disabled="!paybuttonable">立即支付</el-button>
         </el-card>
-
-            <el-button type="primary" @click="payNow">立即支付</el-button>
-
         </el-col>
+
       </el-row>
     </el-card>
+
+    <!--支付的对话框  BEGIN-->
+    <el-dialog v-model="payVisible" title="支付窗口" width="500">
+      <el-image :src=payImage style="width: 100%"></el-image>
+      待支付金额：{{totalToPay}}
+      <template #footer>
+        <div>
+          <el-button @click="onCancel">取消</el-button>
+          <el-button type="primary" @click="payOk()">
+            我已支付
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+    <!--支付的对话框  END-->
   </div>
 </template>
 
 <script setup lang="ts">
 
-import {CircleCloseFilled, Refresh, Search} from "@element-plus/icons-vue";
+import { Refresh, Search} from "@element-plus/icons-vue";
 import {ref} from "vue";
 import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 import InspectAPI from "@/api/menzhenyisheng/inspect";
 import {ElButton} from "element-plus";
+import payImage from '@/views/guahaoshoufei/shoufei/QE.png';
 
 
 // 获取到的患者列表
@@ -106,6 +121,17 @@ let total = ref(0);
 
 // 当前选中的患者信息
 let currentSelectedRow = ref({});
+
+// 支付窗口按钮状态
+let paybuttonable = ref(false);
+
+// 待支付金额
+let totalToPay = ref(0);
+
+// 支付窗口显示属性
+let payVisible = ref(false);
+
+
 
 // 页码改变时的处理方法
 const handleCurrentChange = (newPage: number) => {
@@ -156,26 +182,47 @@ function row_change(row:any){
 
 // 计算检查项的合计金额
 const getSumPrice = () =>{
-  let totalToPay = 0;
   let total = 0;
   inspectlist.value.forEach(row => {
-    if(row.status != 0){
-      if(row.status == 1){
-        totalToPay += row.price;
-      }
-      total += row.price;
+    if(row.status == 1){
+        total += row.price;
     }
   });
-  return ["待缴费金额：", totalToPay];
+  totalToPay.value = total;
+  if(total != 0){
+    paybuttonable.value = true;
+  }
+  return ["待缴费金额：", total];
 }
 
 // 支付按钮
 function payNow (){
-  console.log("支付按钮被点击");
+  payVisible.value = true;
+}
+
+// 支付窗口取消
+function onCancel(){
+  row_change(currentSelectedRow)
+  payVisible.value = false;
+}
+
+// 支付窗口确定
+function payOk(){
+  let params = {
+    regist_id:currentSelectedRow.id
+  }
+  InspectAPI.pay(params).then(
+    (data) => {
+      row_change(currentSelectedRow)
+      paybuttonable.value = false;
+      payVisible.value = false;
+      alert(data);
+    }
+  )
 }
 
 // 刷新患者列表
-function refresh(){
+function refresh_register(){
   tableKey.value = Date.now();
 }
 

@@ -74,4 +74,18 @@ public class InspectServlet extends BaseServlet{
             this.writeErrorJSON(response,"检查结果更新失败！");
         }
     }
+
+    void pay (HttpServletRequest request, HttpServletResponse response){
+        String id = request.getParameter("regist_id");
+        Integer iid = 0;
+        if(id!=null && id.trim().length() >0){
+            iid = Integer.parseInt(id);
+        }
+        int res = inspectApplyService.updateStatusById(iid);
+        if (res >= 1){
+            this.writeSuccessJSON(response,"支付成功！");
+        }else {
+            this.writeErrorJSON(response,"支付失败！");
+        }
+    }
 }

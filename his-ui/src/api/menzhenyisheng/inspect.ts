@@ -34,7 +34,14 @@ const InspectAPI = {
       method:"get",
       params:data
     })
-  }
+  },
+  pay(data:any){
+    return request({
+      url:"/inspect/pay",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default InspectAPI;
