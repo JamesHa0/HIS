@@ -270,6 +270,7 @@ function addtoRegist(){
       clearItemSels;
       inspectVisible.value = false;
       alert("检查项已添加！");
+      refresh();
     }
   }
 }
@@ -278,6 +279,7 @@ function addtoRegist(){
 function onCancel(){
   clearItemSels;
   inspectVisible.value = false;
+  refresh();
 }
 
 // 清空新增检查项对话框的多行选中
