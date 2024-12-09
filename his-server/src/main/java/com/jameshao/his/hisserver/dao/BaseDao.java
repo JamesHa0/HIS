@@ -138,5 +138,14 @@ public class BaseDao {
         return 0;
     }
 
-
+    public List<Map<String, Object>> queryByPage(String sql,int page,int size,Object... args){
+        StringBuffer sqlBuffer = new StringBuffer(sql);
+        sqlBuffer.append(" limit "+(page-1)*size+","+size);
+        return executeQuery(sqlBuffer.toString(),args);
+    }
+    public <T> List<T> queryByPage(String sql,Class<T> clazz,int page,int size,Object... args){
+        StringBuffer sqlBuffer = new StringBuffer(sql);
+        sqlBuffer.append(" limit "+(page-1)*size+","+size);
+        return executeQuery(sqlBuffer.toString(),clazz,args);
+    }
 }
