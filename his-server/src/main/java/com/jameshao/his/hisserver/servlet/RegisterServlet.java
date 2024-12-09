@@ -46,10 +46,27 @@ public class RegisterServlet extends BaseServlet{
     }
 
     public void search(HttpServletRequest request, HttpServletResponse response){
-    	String search_name = request.getParameter("search_name");
-        System.out.println("search_name:"+search_name);
-    	List<Register> list = registerService.search(search_name);
-    	this.writeSuccessJSON(response,list);
+    	String searchkey = request.getParameter("searchkey");
+        String pageStr = request.getParameter("page");
+        String sizeStr = request.getParameter("size");
+        int page = 1;
+        int size = 10; // 设置默认每页数量为10
+        if (pageStr!= null &&!pageStr.isEmpty()) {
+            page = Integer.parseInt(pageStr);
+        }
+        if (sizeStr!= null &&!sizeStr.isEmpty()) {
+            size = Integer.parseInt(sizeStr);
+        }
+        System.out.println("searchkey:"+searchkey);
+        System.out.println("page:"+page);
+        System.out.println("size:"+size);
+        Object[] result = registerService.search(searchkey,page, size);
+        int total = (int) result[0];
+        List<Register> list = (List<Register>) result[1];
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("total", total);
+        responseData.put("list", list);
+    	this.writeSuccessJSON(response,responseData);
     }
 
     public void getByBelong(HttpServletRequest request, HttpServletResponse response){

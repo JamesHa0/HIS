@@ -33,21 +33,27 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     @Override
     public Object[] queryAll(int page, int size) {
         int total = 0;
-        // 计算偏移量，用于分页查询
-        int offset = (page - 1) * size;
         String countSql = "SELECT COUNT(*) FROM register";
-        String dataSql = "SELECT * FROM register LIMIT ?,?";
+        String dataSql = "SELECT * FROM register ";
         List<Map<String, Object>> list = this.executeQuery(countSql);
         total = Integer.parseInt(list.get(0).get("COUNT(*)").toString());
         return new Object[]{
                 total,
-                this.executeQuery(dataSql,Register.class,offset,size)
+                this.queryByPage(dataSql,Register.class,page,size)
         };
     }
 
     @Override
-    public List<Register> queryOneByName(String name) {
-        return this.executeQuery("select * from register where RealName like ?",Register.class,"%"+name+"%");
+    public Object[] queryOneByName(String key,int page, int size) {
+        int total = 0;
+        String countSql = "SELECT COUNT(*) FROM register where RealName like ? ";
+        String dataSql = "select * from register where RealName like ? ";
+        List<Map<String, Object>> list = this.executeQuery(countSql,"%"+key+"%");
+        total = Integer.parseInt(list.get(0).get("COUNT(*)").toString());
+        return new Object[]{
+                total,
+                this.queryByPage(dataSql,Register.class,page,size,"%"+key+"%")
+        };
     }
 
     @Override

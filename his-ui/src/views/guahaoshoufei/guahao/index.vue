@@ -4,14 +4,14 @@
     <el-row>
       <el-col :span="8">
         <el-input
-          v-model="search_name"
+          v-model="searchkey"
           style="max-width: 400px"
           placeholder="请输入患者姓名"
           class="input-with-select"
-          @keyup.enter="search(search_name)"
+          @keyup.enter="search(searchkey)"
         >
           <template #append>
-            <el-button :icon="Search" @click="search(search_name)"/>
+            <el-button :icon="Search" @click="search(searchkey)"/>
           </template>
         </el-input>
       </el-col>
@@ -103,7 +103,7 @@ import ConstantItemAPI from "@/api/system/constantitem";
 import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 
 let tableKey = ref(0);
-let search_name = ref();
+let searchkey = ref();
 let addFormVisible = ref(false);
 let addform = reactive({
   casenumber:'',
@@ -139,13 +139,20 @@ const handleCurrentChange = (newPage: number) => {
 };
 
 //模糊搜索
-function search (search_name: string){
-  console.log(search_name)
-  GuahaoAPI.search({search_name: search_name})
+function search (searchkey: string){
+  console.log(searchkey)
+  let params = {
+    page: currentPage.value,
+    size: pageSize.value,
+    searchkey: searchkey
+  }
+  GuahaoAPI.search(params)
     .then(
       (data:any) => {
         console.log(data)
-        list.value = data;
+        list.value = data.list;
+        total.value = data.total;
+        currentPage.value = 1;
         tableKey.value = Date.now();
       }
     )

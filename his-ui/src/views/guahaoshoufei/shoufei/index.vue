@@ -15,9 +15,10 @@
             style="max-width: 400px"
             placeholder="请输入患者名称"
             class="input-with-select"
+            @keyup.enter="search(searchkey)"
           >
             <template #append>
-              <el-button :icon="Search" />
+              <el-button :icon="Search" @click="search(searchkey)"/>
             </template>
           </el-input>
 
@@ -106,6 +107,9 @@ import payImage from '@/views/guahaoshoufei/shoufei/QE.png';
 // 获取到的患者列表
 let list = ref([]);
 
+// 搜索内容
+let searchkey = ref();
+
 // 获取到的检查项列表
 let inspectlist = ref([]);
 
@@ -158,6 +162,26 @@ function get_list() {
     );
 }
 
+//模糊搜索
+function search (searchkey: string){
+  console.log(searchkey)
+  let params = {
+    page: currentPage.value,
+    size: pageSize.value,
+    searchkey: searchkey
+  }
+  GuahaoAPI.search(params)
+    .then(
+      (data:any) => {
+        console.log(data)
+        list.value = data.list;
+        total.value = data.total;
+        currentPage.value = 1;
+        tableKey.value = Date.now();
+      }
+    )
+}
+
 
 // 获取选中患者的检查项
 function row_change(row:any){
@@ -191,6 +215,8 @@ const getSumPrice = () =>{
   totalToPay.value = total;
   if(total != 0){
     paybuttonable.value = true;
+  } else {
+    paybuttonable.value = false;
   }
   return ["待缴费金额：", total];
 }

@@ -20,8 +20,8 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public List<Register> search(String name) {
-        return dao.queryOneByName(name);
+    public Object[] search(String key, int page, int size) {
+        return dao.queryOneByName(key,page,size);
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface RegisterService {
 
     Object[] getAll(int page, int size);
 
-    List<Register> search(String search_name);
+    Object[] search(String searchkey,int page, int size);
 
     List<Register> getByBelong(int id,String belong,String state);
 

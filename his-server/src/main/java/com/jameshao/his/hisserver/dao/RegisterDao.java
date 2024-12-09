@@ -9,7 +9,7 @@ public interface RegisterDao {
 
     Object[] queryAll(int page, int size);
 
-    List<Register> queryOneByName(String name);
+    Object[] queryOneByName(String key, int page, int size);
 
     List<Register> queryByBelong(int id,String belong,String state);
 
