@@ -11,7 +11,9 @@ public interface RegisterDao {
 
     Object[] queryOneByName(String key, int page, int size);
 
-    List<Register> queryByBelong(int id,String belong,String state);
+    Object[] queryByBelong(int id,String belong,String state, int page, int size);
+
+    Object[] querySomeByBelong(int id,String belong,String state, int page, int size, String searchkey);
 
     int updateVisitStateById(int id,int state);
 }

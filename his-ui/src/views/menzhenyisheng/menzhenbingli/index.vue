@@ -15,9 +15,10 @@
             style="max-width: 400px"
             placeholder="请输入患者名称"
             class="input-with-select"
+            @keyup.enter="search(searchkey)"
           >
             <template #append>
-              <el-button :icon="Search" />
+              <el-button :icon="Search" @click="search(searchkey)" />
             </template>
           </el-input>
 
@@ -164,6 +165,16 @@ function refresh(){
   tableKey.value = Date.now();
 }
 
+
+// 模糊搜索
+function search (searchkey: string) {
+  for(let i = 0;i < RegisterRefArrays.value.length; i++){
+    let childRef = RegisterRefArrays.value[i];
+    if(childRef.value){
+      childRef.value.search(searchkey);
+    }
+  }
+}
 
 
 </script>

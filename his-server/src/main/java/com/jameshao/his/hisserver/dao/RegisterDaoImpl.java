@@ -19,7 +19,7 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
                 register.getIdnumber(),
                 register.getAge(),
                 new Date(),
-                "上午或下午？？？还在测试中",
+                "测试",
                 2,
                 11,
                 1,
@@ -57,24 +57,70 @@ public class RegisterDaoImpl extends BaseDao implements RegisterDao {
     }
 
     @Override
-    public List<Register> queryByBelong(int id, String belong, String state) {
-        System.out.println("id:"+id);
-        System.out.println("belong:"+belong);
-        System.out.println("state:"+state);
-        StringBuffer sql = new StringBuffer("select * from register where ");
+    public Object[] queryByBelong(int id, String belong, String state,int page, int size) {
+        int total = 0;
+        StringBuffer countSql = new StringBuffer("SELECT COUNT(*) FROM register where ");
+        StringBuffer dataSql = new StringBuffer("select * from register where ");
         if("doc".equals(belong)){
-            sql.append("UserID = "+id);
+            countSql.append("UserID = "+id);
+            dataSql.append("UserID = "+id);
         }else if("dept".equals(belong)){
-            sql.append("DeptID = "+id);
+            countSql.append("DeptID = "+id);
+            dataSql.append("DeptID = "+id);
         }
-        sql.append(" and ");
+        countSql.append(" and ");
+        dataSql.append(" and ");
         if("visit".equals(state)){
-            sql.append("VisitState > 1");
+            countSql.append("VisitState > 1");
+            dataSql.append("VisitState > 1");
         }else if("unvisit".equals(state)){
-            sql.append("VisitState = 1");
+            countSql.append("VisitState = 1");
+            dataSql.append("VisitState = 1");
         }
-        System.out.println(sql.toString());
-        return this.executeQuery(sql.toString(),Register.class);
+        System.out.println(countSql.toString());
+        System.out.println(dataSql.toString());
+        List<Map<String, Object>> list = this.executeQuery(countSql.toString());
+        total = Integer.parseInt(list.get(0).get("COUNT(*)").toString());
+        return new Object[]{
+                total,
+                this.queryByPage(dataSql.toString(),Register.class,page,size)
+        };
+    }
+
+    @Override
+    public Object[] querySomeByBelong(int id, String belong, String state, int page, int size, String searchkey) {
+        int total = 0;
+        StringBuffer countSql = new StringBuffer("SELECT COUNT(*) FROM register where ");
+        StringBuffer dataSql = new StringBuffer("select * from register where ");
+        String and = " and ";
+        if("doc".equals(belong)){
+            countSql.append("UserID = "+id);
+            dataSql.append("UserID = "+id);
+        }else if("dept".equals(belong)){
+            countSql.append("DeptID = "+id);
+            dataSql.append("DeptID = "+id);
+        }
+        countSql.append(and);
+        dataSql.append(and);
+        if("visit".equals(state)){
+            countSql.append("VisitState > 1");
+            dataSql.append("VisitState > 1");
+        }else if("unvisit".equals(state)){
+            countSql.append("VisitState = 1");
+            dataSql.append("VisitState = 1");
+        }
+        countSql.append(and);
+        dataSql.append(and);
+        countSql.append("RealName like ? ");
+        dataSql.append("RealName like ? ");
+        System.out.println(countSql.toString());
+        System.out.println(dataSql.toString());
+        List<Map<String, Object>> list = this.executeQuery(countSql.toString(),"%"+searchkey+"%");
+        total = Integer.parseInt(list.get(0).get("COUNT(*)").toString());
+        return new Object[]{
+                total,
+                this.queryByPage(dataSql.toString(),Register.class,page,size,"%"+searchkey+"%")
+        };
     }
 
     @Override

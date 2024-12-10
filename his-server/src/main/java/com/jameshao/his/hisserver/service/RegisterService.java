@@ -13,7 +13,9 @@ public interface RegisterService {
 
     Object[] search(String searchkey,int page, int size);
 
-    List<Register> getByBelong(int id,String belong,String state);
+    Object[] getByBelong(int id,String belong,String state,int page, int size);
+
+    Object[] searchByBelong(int id,String belong,String state,int page, int size,String searchkey);
 
     int changeState(int id,int state);
 

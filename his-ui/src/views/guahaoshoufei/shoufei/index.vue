@@ -101,7 +101,7 @@ import {ref} from "vue";
 import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 import InspectAPI from "@/api/menzhenyisheng/inspect";
 import {ElButton} from "element-plus";
-import payImage from '@/views/guahaoshoufei/shoufei/QE.png';
+import payImage from '@/views/guahaoshoufei/shoufei/QR.png';
 
 
 // 获取到的患者列表
@@ -140,7 +140,25 @@ let payVisible = ref(false);
 // 页码改变时的处理方法
 const handleCurrentChange = (newPage: number) => {
   currentPage.value = newPage;
-  get_list();
+  if(searchkey.value == "" || searchkey.value == null || searchkey.value === undefined){
+    get_list();
+  }else {
+    console.log("searchkey:",searchkey.value);
+    let params = {
+      page: currentPage.value,
+      size: pageSize.value,
+      searchkey: searchkey.value
+    }
+    GuahaoAPI.search(params)
+      .then(
+        (data:any) => {
+          console.log(data)
+          list.value = data.list;
+          total.value = data.total;
+          tableKey.value = Date.now();
+        }
+      )
+  }
 };
 
 

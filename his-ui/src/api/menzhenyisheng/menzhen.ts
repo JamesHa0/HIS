@@ -36,6 +36,13 @@ const MenzhenAPI = {
       params:data
     })
   },
+  searchbyname(data:any){
+    return request({
+      url:"/register/searchByBelong",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default MenzhenAPI;

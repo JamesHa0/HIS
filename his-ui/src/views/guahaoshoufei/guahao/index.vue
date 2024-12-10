@@ -42,6 +42,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      v-if="total > 0"
       v-model:current-page="currentPage"
       :page-size="pageSize"
       :total="total"
@@ -135,7 +136,25 @@ let total = ref(0);
 // 页码改变时的处理方法
 const handleCurrentChange = (newPage: number) => {
   currentPage.value = newPage;
-  get_list();
+  if(searchkey.value == "" || searchkey.value == null || searchkey.value === undefined){
+    get_list();
+  }else {
+    console.log("searchkey:",searchkey.value);
+    let params = {
+      page: currentPage.value,
+      size: pageSize.value,
+      searchkey: searchkey.value
+    }
+    GuahaoAPI.search(params)
+      .then(
+        (data:any) => {
+          console.log(data)
+          list.value = data.list;
+          total.value = data.total;
+          tableKey.value = Date.now();
+        }
+      )
+  }
 };
 
 //模糊搜索

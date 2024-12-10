@@ -25,9 +25,15 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public List<Register> getByBelong(int id, String belong, String state) {
-        return dao.queryByBelong(id, belong, state);
+    public Object[] getByBelong(int id, String belong, String state, int page, int size) {
+        return dao.queryByBelong(id, belong, state,page,size);
     }
+
+    @Override
+    public Object[] searchByBelong(int id, String belong, String state, int page, int size, String searchkey) {
+        return dao.querySomeByBelong(id, belong, state,page,size,searchkey);
+    }
+
 
     @Override
     public int changeState(int id, int state) {
