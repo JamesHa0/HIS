@@ -28,7 +28,6 @@
       <el-table-column prop="realname" label="姓名" min-width="20%" />
       <el-table-column prop="gender" label="性别" min-width="10%" />
       <el-table-column prop="idnumber" label="身份证号" min-width="25%" />
-<!--      <el-table-column prop="" label="出生日期" v-model="CaseNumber" width="180" />-->
       <el-table-column prop="age" label="年龄" min-width="10%" />
 
       <el-table-column fixed="right" label="操作" min-width="10%">
@@ -76,7 +75,6 @@
       </el-form-item>
       <el-form-item label="年龄" :label-width="100">
         <el-input v-model="addform.age" />
-        <el-input v-model="addform.agetype" />
       </el-form-item>
 
       <el-form-item label="家庭住址" :label-width="100">
@@ -102,6 +100,7 @@
 import {Edit, Search} from "@element-plus/icons-vue";
 import ConstantItemAPI from "@/api/system/constantitem";
 import GuahaoAPI from "@/api/guahaoshoufei/guahao";
+import {useUserStore} from "@/store";
 
 let tableKey = ref(0);
 let searchkey = ref();
@@ -122,6 +121,9 @@ let genders = ref([
     constantname:'',
   }
 ])
+
+// 当前用户信息
+const userStore = useUserStore();
 
 //挂号列表
 let list = ref([]);
@@ -179,11 +181,14 @@ function search (searchkey: string){
 
 //新增挂号
 function add_register(){
-  console.log(addform);
-  GuahaoAPI.add_register(addform)
+  let params = addform;
+  params.userid = userStore.userInfo.id;
+  params.deptid = userStore.userInfo.deptid;
+  GuahaoAPI.add_register(params)
     .then(
       (data) => {
-        console.log(data);
+        alert(data);
+        addFormVisible.value = false;
         get_list();
       }
     )

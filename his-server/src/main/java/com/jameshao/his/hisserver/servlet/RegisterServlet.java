@@ -20,7 +20,7 @@ public class RegisterServlet extends BaseServlet{
         Register register = ParamUtils.getParam(Register.class,request);
         registerService.add(register);
 
-        this.writeSuccessJSON(response,"okk");
+        this.writeSuccessJSON(response,"挂号添加成功！");
     }
 
     public void getAll(HttpServletRequest request, HttpServletResponse response){

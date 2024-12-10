@@ -19,9 +19,9 @@ public class MedicalRecordServlet extends BaseServlet{
         int success = medicalRecordService.addOne(medicalrecord);
         System.out.println("success:"+success);
         if(success >= 1){
-            this.writeSuccessJSON(response,"添加病例成功！");
+            this.writeSuccessJSON(response,"添加诊断成功！");
         }else{
-            this.writeErrorJSON(response,"添加病例失败！");
+            this.writeErrorJSON(response,"添加诊断失败！");
         }
     }
     public void get_one_by_regist (HttpServletRequest request, HttpServletResponse response){
@@ -36,7 +36,7 @@ public class MedicalRecordServlet extends BaseServlet{
                 this.writeSuccessJSON(response,list.get(0));
             }
         }else {
-            this.writeErrorJSON(response,"未获得患者病例！");
+            this.writeErrorJSON(response,"未获得患者病历！");
         }
     }
     public void update_by_casenumber(HttpServletRequest request, HttpServletResponse response){
@@ -44,9 +44,9 @@ public class MedicalRecordServlet extends BaseServlet{
         String casenumber = medicalrecord.getCasenumber();
         int success = medicalRecordService.updateByCasenumber(medicalrecord);
         if(success >= 1){
-            this.writeSuccessJSON(response,"修改病例成功！");
+            this.writeSuccessJSON(response,"修改诊断成功！");
         }else {
-            this.writeErrorJSON(response,"修改病例失败！");
+            this.writeErrorJSON(response,"修改诊断失败！");
         }
 
     }

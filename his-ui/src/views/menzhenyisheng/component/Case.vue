@@ -120,12 +120,12 @@ function save(){
   } else{
     MenzhenAPI.add_record(params.value).then(
       (data) => {
-        console.log(data);
+        alert(data);
       })
     // 修改患者状态信息为：未缴费
     MenzhenAPI.change_state({regist_id:params.value.registid,state:"未缴费"}).then(
       (data) => {
-        console.log(data);
+        alert(data);
       }
     )
   }
@@ -139,7 +139,7 @@ function update() {
   } else{
     MenzhenAPI.update_by_casenumber(params.value).then(
       (data) => {
-        console.log(data);
+        alert(data);
       }
     )
   }
