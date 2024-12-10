@@ -28,6 +28,13 @@ const ConstanttypeAPI = {
       params:data
     })
   },
+  searchByKey(data:any){
+    return request({
+      url:"/constanttype/searchByKey",
+      method:"get",
+      params:data
+    })
+  }
 }
 
 export default ConstanttypeAPI;

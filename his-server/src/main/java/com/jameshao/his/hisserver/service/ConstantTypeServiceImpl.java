@@ -28,4 +28,9 @@ public class ConstantTypeServiceImpl implements ConstantTypeService{
     public void delById(int id) {
     	dao.delById(id);
     }
+
+    @Override
+    public List<Constanttype> searchByKey(String key) {
+        return dao.queryByKey(key);
+    }
 }

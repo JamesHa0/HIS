@@ -11,4 +11,6 @@ public interface ConstantTypeService {
     void add(Constanttype type);
 
     void delById(int id);
+
+    List<Constanttype> searchByKey(String key);
 }

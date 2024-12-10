@@ -50,4 +50,10 @@ public class ConstantTypeServlet extends BaseServlet {
 
         this.writeSuccessJSON(response,null);
     }
+
+    void searchByKey(HttpServletRequest request, HttpServletResponse response){
+        String searchkey = request.getParameter("searchkey");
+        List<Constanttype> list = service.searchByKey(searchkey);
+        this.writeSuccessJSON(response,list);
+    }
 }

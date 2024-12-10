@@ -8,9 +8,10 @@
           style="max-width: 400px"
           placeholder="请输入常数类别编码或名称"
           class="input-with-select"
+          @keyup.enter="search(searchkey)"
         >
         <template #append>
-          <el-button :icon="Search" />
+          <el-button :icon="Search" @click="search(searchkey)"/>
         </template>
         </el-input>
       </el-col>
@@ -88,7 +89,7 @@ import {Edit, Search} from '@element-plus/icons-vue'
 import ConstanttypeAPI from "@/api/system/constanttype";
 
 let tableKey = ref(0);
-let searchkey ="";
+let searchkey = ref();
 let list = ref([]);
 let editFormVisible = ref(false);
 let addFormVisible = ref(false);
@@ -109,6 +110,22 @@ function handleEdit(row:any){
   beforeEditForm = row;
   editForm = row;
   editFormVisible.value = true;
+}
+
+
+// 模糊搜索
+function search (searchkey: string){
+  console.log(searchkey)
+  let params = {
+    searchkey: searchkey
+  }
+  ConstanttypeAPI.searchByKey(params)
+    .then(
+      (data:any) => {
+        list.value = data;
+        tableKey.value = Date.now();
+      }
+    )
 }
 
 
