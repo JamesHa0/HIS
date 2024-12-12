@@ -6,44 +6,10 @@
       <el-row>
         <!--        左侧部分-->
         <el-col :span="8">
-          <el-row justify="space-between">
-            <label class="label1">患者选择</label><el-button type="primary" :icon="Refresh" @click="refresh_register()"></el-button>
-          </el-row>
-
-          <el-input
-            v-model="searchkey"
-            style="max-width: 400px"
-            placeholder="请输入患者名称"
-            class="input-with-select"
-            @keyup.enter="search(searchkey)"
-          >
-            <template #append>
-              <el-button :icon="Search" @click="search(searchkey)"/>
-            </template>
-          </el-input>
-
-<!--          患者显示列表-->
-          <el-card>
-            <el-table :data="list"
-                      style="width: 100%"
-                      highlight-current-row
-                      @current-change="row_change"
-                      :key="tableKey"
-                      ref = "tableRef"
-            >
-              <el-table-column prop="casenumber" label="病历号" min-width="40%" />
-              <el-table-column prop="realname" label="姓名" min-width="40%" />
-              <el-table-column prop="age" label="年龄" min-width="20%" />
-            </el-table>
-            <el-pagination
-              v-model:current-page="currentPage"
-              :page-size="pageSize"
-              :total="total"
-              layout="total, prev, pager, next, jumper"
-              @current-change="handleCurrentChange"
-            />
-          </el-card>
-
+          <show-register
+            @currentSelectedRow="handleChildSelected"
+            ref="ChildSelectRegist"
+          />
         </el-col>
 
 
@@ -96,35 +62,25 @@
 
 <script setup lang="ts">
 
-import { Refresh, Search} from "@element-plus/icons-vue";
 import {ref} from "vue";
-import GuahaoAPI from "@/api/guahaoshoufei/guahao";
 import InspectAPI from "@/api/menzhenyisheng/inspect";
 import {ElButton} from "element-plus";
 import payImage from '@/views/guahaoshoufei/shoufei/QR.png';
+import ShowRegister from "@/views/guahaoshoufei/component/showRegister.vue";
 
-
-// 获取到的患者列表
-let list = ref([]);
-
-// 搜索内容
-let searchkey = ref();
+// 挂号列表子组件方法
+const ChildSelectRegist = ref();
 
 // 获取到的检查项列表
 let inspectlist = ref([]);
 
+// 当前选中的患者信息
+let currentSelectedRow = ref({});
+
 // tableKey
 let tableKey = ref(0);
 
-// 当前页码，初始化为1
-let currentPage = ref(1);
-// 每页显示的记录数量，可根据实际需求调整，这里假设每页显示10条记录
-let pageSize = ref(10);
-// 总记录数，初始为0，后续会从后端获取并更新
-let total = ref(0);
 
-// 当前选中的患者信息
-let currentSelectedRow = ref({});
 
 // 支付窗口按钮状态
 let paybuttonable = ref(false);
@@ -136,81 +92,23 @@ let totalToPay = ref(0);
 let payVisible = ref(false);
 
 
-
-// 页码改变时的处理方法
-const handleCurrentChange = (newPage: number) => {
-  currentPage.value = newPage;
-  if(searchkey.value == "" || searchkey.value == null || searchkey.value === undefined){
-    get_list();
-  }else {
-    console.log("searchkey:",searchkey.value);
-    let params = {
-      page: currentPage.value,
-      size: pageSize.value,
-      searchkey: searchkey.value
-    }
-    GuahaoAPI.search(params)
-      .then(
-        (data:any) => {
-          console.log(data)
-          list.value = data.list;
-          total.value = data.total;
-          tableKey.value = Date.now();
-        }
-      )
+// 选择挂号
+function handleChildSelected(value:any){
+  // 挂号列表子组件返回数据
+  if(currentSelectedRow.value){
+    currentSelectedRow.value = value;
   }
-};
 
+  getInspectList()
 
-// 获取全部挂号患者
-function get_list() {
-  console.log("currentPage.value:",currentPage.value);
-  console.log("pageSize.value:",pageSize.value)
-  let params = {
-    page: currentPage.value,
-    size: pageSize.value
-  }
-  GuahaoAPI.getall(params)
-    .then(
-      (data: any) => {
-        list.value = data.list;
-        total.value = data.total;
-        tableKey.value = Date.now();
-      }
-    );
 }
 
-//模糊搜索
-function search (searchkey: string){
-  console.log(searchkey)
-  let params = {
-    page: currentPage.value,
-    size: pageSize.value,
-    searchkey: searchkey
-  }
-  GuahaoAPI.search(params)
-    .then(
-      (data:any) => {
-        console.log(data)
-        list.value = data.list;
-        total.value = data.total;
-        currentPage.value = 1;
-        tableKey.value = Date.now();
-      }
-    )
-}
-
-
-// 获取选中患者的检查项
-function row_change(row:any){
-  currentSelectedRow = row;
-  console.log("当前选中患者信息：",currentSelectedRow)
-
+// 获取选中患者的检查项列表
+function getInspectList(){
   let param = {
-    regist_id:currentSelectedRow.id
+    regist_id:currentSelectedRow.value.id
   }
-
-  if(currentSelectedRow.id){
+  if(currentSelectedRow.value.id){
     InspectAPI.get_by_registid(param).then(
       (data) => {
         console.log(data);
@@ -219,6 +117,7 @@ function row_change(row:any){
     )
   }
 }
+
 
 
 
@@ -246,18 +145,19 @@ function payNow (){
 
 // 支付窗口取消
 function onCancel(){
-  row_change(currentSelectedRow)
+  getInspectList()
   payVisible.value = false;
 }
 
 // 支付窗口确定
 function payOk(){
+  console.log("currentSelectedRow",currentSelectedRow);
   let params = {
-    regist_id:currentSelectedRow.id
+    regist_id:currentSelectedRow.value.id
   }
   InspectAPI.pay(params).then(
     (data) => {
-      row_change(currentSelectedRow)
+      getInspectList()
       paybuttonable.value = false;
       payVisible.value = false;
       alert(data);
@@ -265,14 +165,6 @@ function payOk(){
   )
 }
 
-// 刷新患者列表
-function refresh_register(){
-  tableKey.value = Date.now();
-}
-
-onMounted(()=>{
-  get_list();
-})
 
 </script>
 
