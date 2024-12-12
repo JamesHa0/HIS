@@ -28,7 +28,14 @@ const GuahaoAPI = {
       method:"get",
       params:data
     })
-  }
+  },
+  change_state(data:any){
+    return request({
+      url:"/register/changeState",
+      method:"get",
+      params:data
+    })
+  },
 }
 
 export default GuahaoAPI;

@@ -32,10 +32,7 @@
 
       <el-table-column fixed="right" label="操作" min-width="10%">
         <template #default="scope">
-          <el-button link type="primary" size="small" @click="">
-            编辑
-          </el-button>
-          <el-button link type="primary" size="small" @click="">删除</el-button>
+          <el-button link type="primary" size="small" @click="delRegist(scope.row)">退号</el-button>
         </template>
 
       </el-table-column>
@@ -206,6 +203,31 @@ function get_gender(){
       }
     )
 }
+
+// 退号按钮
+function delRegist(row:any){
+  ElMessageBox.confirm("确认退号?", "警告", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(function (){
+    console.log(row.id)
+    let params={
+      regist_id:row.id,
+      state:"已退费"
+    }
+    GuahaoAPI.change_state(params)
+      .then(
+        (data:any) => {
+          alert(data)
+          //刷新页面
+          get_list();
+        })
+  })
+}
+
+
+
 
 // 获取列表
 function get_list() {
