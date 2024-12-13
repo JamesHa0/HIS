@@ -11,7 +11,7 @@
  Target Server Version : 80037 (8.0.37)
  File Encoding         : 65001
 
- Date: 04/12/2024 23:17:16
+ Date: 13/12/2024 13:25:06
 */
 
 SET NAMES utf8mb4;
@@ -30400,22 +30400,54 @@ CREATE TABLE `inspect_apply`  (
   `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '检验项目名称',
   `registID` int NULL DEFAULT NULL COMMENT '病例号',
   `price` decimal(6, 2) NULL DEFAULT NULL COMMENT '价格',
-  `status` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '状态',
+  `status` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '状态(1--待缴费,2--已缴费,3--已检查,4--已退费,0--已撤销)',
   `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '检查结果',
   PRIMARY KEY (`itemID`) USING BTREE,
   INDEX `FK_Reference_13`(`inspectID` ASC) USING BTREE,
   INDEX `FK_Reference_14`(`registID` ASC) USING BTREE,
   CONSTRAINT `FK_Reference_13` FOREIGN KEY (`inspectID`) REFERENCES `inspectitem` (`inspectID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_Reference_14` FOREIGN KEY (`registID`) REFERENCES `register` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '开立检验请' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 76 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '开立检验请' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of inspect_apply
 -- ----------------------------
-INSERT INTO `inspect_apply` VALUES (20, 1, 'Xct', 6, 138.00, '1', NULL);
-INSERT INTO `inspect_apply` VALUES (21, 2, '体格检查', 6, 115.00, '1', NULL);
-INSERT INTO `inspect_apply` VALUES (22, 3, '心电图', 6, 220.00, '1', NULL);
-INSERT INTO `inspect_apply` VALUES (23, 4, '肌电图', 6, 150.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (36, 1, 'Xct', 3, 138.00, '2', 'asdfsadf');
+INSERT INTO `inspect_apply` VALUES (37, 2, '体格检查', 3, 115.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (38, 3, '心电图', 3, 220.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (39, 4, '肌电图', 3, 150.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (40, 1, 'Xct', 6, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (41, 2, '体格检查', 6, 115.00, '3', '体格正常。');
+INSERT INTO `inspect_apply` VALUES (42, 3, '心电图', 6, 220.00, '4', NULL);
+INSERT INTO `inspect_apply` VALUES (47, 1, 'Xct', 26, 138.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (48, 2, '体格检查', 26, 115.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (49, 3, '心电图', 26, 220.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (50, 4, '肌电图', 26, 150.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (51, 1, 'Xct', 7, 138.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (52, 2, '体格检查', 7, 115.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (53, 3, '心电图', 7, 220.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (54, 4, '肌电图', 7, 150.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (55, 1, 'Xct', 27, 138.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (56, 2, '体格检查', 27, 115.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (57, 3, '心电图', 27, 220.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (58, 4, '肌电图', 27, 150.00, '1', NULL);
+INSERT INTO `inspect_apply` VALUES (59, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (60, 2, '体格检查', 3, 115.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (61, 3, '心电图', 3, 220.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (62, 4, '肌电图', 3, 150.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (63, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (64, 2, '体格检查', 3, 115.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (65, 3, '心电图', 3, 220.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (66, 4, '肌电图', 3, 150.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (67, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (68, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (69, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (70, 1, 'Xct', 54, 138.00, '2', '123');
+INSERT INTO `inspect_apply` VALUES (71, 2, '体格检查', 54, 115.00, '2', '121323');
+INSERT INTO `inspect_apply` VALUES (72, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (73, 1, 'Xct', 3, 138.00, '2', NULL);
+INSERT INTO `inspect_apply` VALUES (74, 1, 'Xct', 6, 138.00, '0', NULL);
+INSERT INTO `inspect_apply` VALUES (75, 2, '体格检查', 6, 115.00, '2', NULL);
 
 -- ----------------------------
 -- Table structure for inspectitem
@@ -30490,7 +30522,7 @@ CREATE TABLE `medicalrecord`  (
   `Handling` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '处理意见',
   `CaseState` int NULL DEFAULT NULL COMMENT '病历状态 1-暂存 2-已提交 3-诊毕',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of medicalrecord
@@ -30500,18 +30532,19 @@ INSERT INTO `medicalrecord` VALUES (3, '600607', 4, '转移性右下腹痛伴恶
 INSERT INTO `medicalrecord` VALUES (4, '600605', 6, '间断性右上腹疼痛2年。', '该患缘于2年前无明显诱因开始出现右上腹部隐痛，伴右胸背部放散痛，无肩部放散痛，腹痛呈间断性发作，曾予以抗感染治疗（具体药名及剂量不详）后腹痛可缓解。', '于2010年1月14日在四平市爱龄齐医院行超声检查提示：胆囊多发结石，但未经治疗，今为进一步治疗来我院，门诊以胆囊结石收入院。病程中无寒战、高热，无反酸、嗳气，无恶心、呕吐，无呕血、黑便，无黄染。患病以来，睡眠不良，食欲欠佳，大小便正常。', '无结核及肝炎病史，无糖尿病及心脏病、高血压病史，无药物过敏史及手术史。', '无', '无', '腹部彩超（2008-06-11）', '低脂饮食', '', '', '', 2);
 INSERT INTO `medicalrecord` VALUES (5, '600606', 9, '右下腹痛伴恶心。', '该患于8小时前无诱因出现腹部疼痛，初表现为上腹部隐痛，4小时后疼痛逐渐加重并转移至右下腹固定，无腰背部及会阴部放散痛，呈阵发性发作，伴有恶心、呕吐数次，呕吐物为胃内容物，量共约200毫升，未经任何诊治，今因腹痛不缓解前来我院就诊，门诊以“腹痛待查”收入院。病程中患者无咳嗽、咳痰，无心悸、气短，无呼吸困难，无腹胀、腹泻，无尿频、尿急、尿痛及血尿，患病以来，睡眠不良，食欲欠佳，大小便正常。', '该患以转移性右下腹痛伴恶心、呕吐8小时于2008年06月11日入院。', '无结核及肝炎病史，无糖尿病及心脏病、高血压病史，无药物过敏史及手术史。', '无', '无', '血常规', '无', '', '', '', 2);
 INSERT INTO `medicalrecord` VALUES (6, '600609', 25, '111', '222', '333', '444', '555', '666', '777', '888', '', '', '', 2);
-INSERT INTO `medicalrecord` VALUES (7, '600607', 26, '11', '22', '33', '44', '55', '66', 'ww', 'gggg', '', '', '', 2);
 INSERT INTO `medicalrecord` VALUES (8, '600608', 27, '苏二强苏二强苏二强苏二强苏二强啊啊', '苏二强苏二强苏二强苏二强', '苏二强苏二强苏二强苏二强', '苏二强苏二强苏二强苏二强', '苏二强苏二强苏二强苏二强', '苏二强苏二强苏二强苏二强苏二强', '苏二强', '苏二强', '', '', '', 3);
 INSERT INTO `medicalrecord` VALUES (9, '600610', 29, 'q', 'q', 'q', 'q', 'q', 'q', 'q', 'q', '', '', '', 3);
 INSERT INTO `medicalrecord` VALUES (10, '600611', 30, '3', '3', '3', '3', '3', '3', '3', '3', '', '', '', 3);
-INSERT INTO `medicalrecord` VALUES (11, '600609', 28, 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', '', '', '', 3);
 INSERT INTO `medicalrecord` VALUES (13, '600612', 31, '', '', '', '', '', '', '', '', '', '', '', 3);
-INSERT INTO `medicalrecord` VALUES (15, '600613', 32, '', '', '', '', '', '', '', '', '', '', '', 3);
+INSERT INTO `medicalrecord` VALUES (15, '600613', 32, 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', NULL, 3);
 INSERT INTO `medicalrecord` VALUES (18, '600614', 33, '', '', '', '', '', '', '', '', '', '', '', 3);
 INSERT INTO `medicalrecord` VALUES (19, '600615', 34, '', '', '', '', '', '', '', '', '', '', '', 2);
 INSERT INTO `medicalrecord` VALUES (20, '600618', 37, 'qq', '', '', '', '', '', '', '', '', '', '', 2);
 INSERT INTO `medicalrecord` VALUES (29, '600600', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `medicalrecord` VALUES (30, '600604', 7, 'test1111', 'test1111', 'test11', 'test11', 'test11', 'test11', 'test11', 'test11', NULL, NULL, NULL, 0);
+INSERT INTO `medicalrecord` VALUES (31, '600616', 35, 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', 'tttest', NULL, 3);
+INSERT INTO `medicalrecord` VALUES (32, '1115', 54, '121', '31231123', '123123', '123123', '23', '1231', '23132', 'dasdsad', '31232', '123sda', NULL, 0);
+INSERT INTO `medicalrecord` VALUES (33, '1114', 53, 'fawfca', 'fvasdsfV', 'ASVFADFA', 'VFVAsda', 'SDFBSfdsb', 'bdsgbsd', 'sbdfg', 'bsdrgbsrg', 'dbgsdfbgs', 'sdfbgs', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for menu
@@ -30624,32 +30657,49 @@ CREATE TABLE `register`  (
   `IsBook` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '病历本要否  是/否',
   `RegistTime` datetime NOT NULL COMMENT '挂号时间',
   `RegisterID` int NOT NULL COMMENT '挂号员ID',
-  `VisitState` int NULL DEFAULT NULL COMMENT '本次看诊状态',
+  `VisitState` int NULL DEFAULT NULL COMMENT '本次看诊状态(1--未就诊,2--未缴费,3--未检查,4--已检查,5--已退费)',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of register
 -- ----------------------------
 INSERT INTO `register` VALUES (3, '600600', '李白', 71, '210103', '1900-01-01', 18, '岁', '沈阳雨后', '2019-03-18', '上午', 1, 1, 2, 1, '1', '2019-03-18 09:20:34', 301, 2);
-INSERT INTO `register` VALUES (4, '600601', '杜甫', 71, '', '1900-01-01', 17, '岁', '辽宁北镇', '2019-03-19', '下午', 2, 1, 1, 2, '1', '2019-03-18 09:21:26', 301, 1);
+INSERT INTO `register` VALUES (4, '600601', '杜甫', 71, '', '1900-01-01', 17, '岁', '辽宁北镇', '2019-03-19', '下午', 2, 1, 1, 2, '1', '2019-03-18 09:21:26', 301, 2);
 INSERT INTO `register` VALUES (5, '600602', '李商隐', 71, '', '1900-01-01', 11, '岁', '沈阳苏家屯', '2019-03-18', '上午', 2, 1, 2, 1, '0', '2019-03-18 09:22:24', 301, 1);
 INSERT INTO `register` VALUES (6, '600603', '杜牧', 71, '21', '1900-01-01', 11, '岁', '大连河口', '2019-03-19', '上午', 1, 1, 1, 2, '1', '2019-03-19 09:18:25', 301, 2);
-INSERT INTO `register` VALUES (7, '600604', '李清照', 72, '211', '1900-01-01', 56, '岁', '青岛黄岛区', '2019-03-19', '上午', 1, 1, 1, 2, '1', '2019-03-19 10:08:51', 301, 1);
+INSERT INTO `register` VALUES (7, '600604', '李清照', 72, '211', '1900-01-01', 56, '岁', '青岛黄岛区', '2019-03-19', '上午', 1, 1, 1, 2, '1', '2019-03-19 10:08:51', 301, 2);
 INSERT INTO `register` VALUES (8, '600605', '李贺', 71, '300', '1900-01-01', 67, '岁', '长沙岳麓山路', '2019-03-19', '上午', 1, 1, 1, 1, '1', '2019-03-19 10:09:35', 301, 1);
 INSERT INTO `register` VALUES (9, '600606', '卢照邻', 71, '3567', '1900-01-01', 33, '岁', '天津空港', '2019-03-19', '下午', 2, 1, 2, 1, '0', '2019-03-19 10:10:44', 301, 2);
 INSERT INTO `register` VALUES (26, '600607', '苏明宇', 71, '', '1900-01-01', 33, '岁', '', '2019-03-26', '上午', 1, 1, 1, 1, '1', '2019-03-26 09:27:00', 301, 2);
 INSERT INTO `register` VALUES (27, '600608', '苏大强', 71, '', '1900-01-01', 72, '岁', '', '2019-03-28', '上午', 1, 1, 1, 1, '1', '2019-03-28 10:55:20', 301, 3);
 INSERT INTO `register` VALUES (28, '600609', '苏二强', 71, '', '1900-01-01', 23, '岁', '', '2019-03-28', '上午', 1, 1, 1, 1, '0', '2019-03-28 10:57:03', 301, 3);
-INSERT INTO `register` VALUES (29, '600610', 'aa', 71, '', '1900-01-01', 11, '岁', '', '2019-03-28', '下午', 1, 1, 1, 1, '1', '2019-03-28 13:45:25', 9, 3);
+INSERT INTO `register` VALUES (29, '600610', 'aa', 71, '', '1900-01-01', 11, '岁', '', '2019-03-28', '下午', 1, 1, 1, 1, '1', '2019-03-28 13:45:25', 9, 1);
 INSERT INTO `register` VALUES (30, '600611', '利用', 71, '', '1900-01-01', 33, '岁', '', '2019-03-28', '下午', 1, 1, 1, 1, '1', '2019-03-28 15:23:48', 10, 3);
-INSERT INTO `register` VALUES (31, '600612', 'cdfg', 71, '', '1900-01-01', 23, '岁', '', '2019-03-26', '上午', 1, 1, 1, 1, '1', '2019-03-28 16:53:35', 9, 3);
-INSERT INTO `register` VALUES (32, '600613', '码云', 71, '', '1900-01-01', 22, '岁', '', '2019-03-29', '上午', 1, 1, 1, 1, '0', '2019-03-29 09:23:45', 9, 2);
+INSERT INTO `register` VALUES (31, '600612', 'cdfg', 71, '', '1900-01-01', 23, '岁', '', '2019-03-26', '上午', 1, 1, 1, 1, '1', '2019-03-28 16:53:35', 9, 2);
+INSERT INTO `register` VALUES (32, '600613', '码云', 71, '', '1900-01-01', 22, '岁', '', '2019-03-29', '上午', 1, 1, 1, 1, '0', '2019-03-29 09:23:45', 9, 1);
 INSERT INTO `register` VALUES (33, '600614', 'aa', 71, '', '1900-01-01', 22, '岁', '', '2019-03-29', '上午', 1, 1, 1, 1, '0', '2019-03-29 14:41:00', 9, 3);
 INSERT INTO `register` VALUES (34, '600615', 'bb', 71, '', '1900-01-01', 33, '岁', '', '2019-03-29', '上午', 1, 1, 1, 1, '0', '2019-03-29 14:46:17', 9, 2);
 INSERT INTO `register` VALUES (35, '600616', '马路', 71, '21', '1900-01-01', 45, '岁', 'SSS', '2019-03-29', '上午', 1, 1, 1, 1, '0', '2019-04-01 10:17:58', 9, 1);
 INSERT INTO `register` VALUES (36, '600617', 'k', 71, '', '1900-01-01', 8, '岁', '', '2019-04-01', '下午', 1, 1, 1, 1, '1', '2019-04-01 10:36:40', 9, 1);
 INSERT INTO `register` VALUES (37, '600618', '顺号', 71, '211', '1900-01-01', 22, '岁', 'AAZZ', '2019-04-01', '下午', 1, 2, 2, 1, '0', '2019-04-01 13:25:23', 9, 2);
+INSERT INTO `register` VALUES (39, '1001', '111', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:25:44', 2, 1);
+INSERT INTO `register` VALUES (40, '1002', '112', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:25:55', 2, 1);
+INSERT INTO `register` VALUES (41, '1003', '113', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:05', 2, 1);
+INSERT INTO `register` VALUES (42, '1004', '114', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:12', 2, 1);
+INSERT INTO `register` VALUES (43, '1005', '115', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:19', 2, 1);
+INSERT INTO `register` VALUES (44, '1006', '116', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:24', 2, 1);
+INSERT INTO `register` VALUES (45, '1007', '117', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:29', 2, 1);
+INSERT INTO `register` VALUES (46, '1008', '118', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:33', 2, 1);
+INSERT INTO `register` VALUES (47, '1009', '119', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:36', 2, 1);
+INSERT INTO `register` VALUES (48, '10010', '1110', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:46', 2, 1);
+INSERT INTO `register` VALUES (49, '10011', '1111', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:50', 2, 1);
+INSERT INTO `register` VALUES (50, '10012', '1112', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:53', 2, 1);
+INSERT INTO `register` VALUES (51, '10013', '1113', 71, NULL, NULL, NULL, NULL, NULL, '2024-12-09', '测试', 2, 11, 1, 1, NULL, '2024-12-09 16:26:56', 2, 1);
+INSERT INTO `register` VALUES (53, '1114', '1114', 71, '1234567890', NULL, 11, NULL, NULL, '2024-12-10', '测试', 1, 11, 1, 1, NULL, '2024-12-10 10:04:14', 2, 2);
+INSERT INTO `register` VALUES (54, '1115', '1115', 71, '1234567890', NULL, 22, NULL, NULL, '2024-12-10', '测试', 1, 11, 1, 1, NULL, '2024-12-10 10:55:42', 2, 2);
+INSERT INTO `register` VALUES (55, '112233', '332211', 71, NULL, NULL, 1, NULL, NULL, '2024-12-12', '测试', 1, 11, 1, 1, NULL, '2024-12-12 11:28:58', 2, 5);
+INSERT INTO `register` VALUES (56, '112233', '332211', 71, NULL, NULL, 2, NULL, NULL, '2024-12-12', '测试', 1, 11, 1, 1, NULL, '2024-12-12 11:33:31', 2, 5);
 
 -- ----------------------------
 -- Table structure for registlevel
@@ -30720,8 +30770,8 @@ INSERT INTO `role_menu` VALUES (1, 3);
 INSERT INTO `role_menu` VALUES (1, 4);
 INSERT INTO `role_menu` VALUES (1, 5);
 INSERT INTO `role_menu` VALUES (1, 11);
-INSERT INTO `role_menu` VALUES (1, 12);
 INSERT INTO `role_menu` VALUES (1, 21);
+INSERT INTO `role_menu` VALUES (1, 23);
 INSERT INTO `role_menu` VALUES (1, 31);
 INSERT INTO `role_menu` VALUES (2, 3);
 INSERT INTO `role_menu` VALUES (2, 31);
